@@ -1,0 +1,202 @@
+Limit zoom to Karnataka only (minZoom: 7, maxZoom: 15)
+
+Disable any foreign tiles (no USA defaults)
+
+🚌 ANIMATED BUS DISPLAY
+
+Replace static markers with animated moving bus icons
+
+Use custom animated SVG or Lottie JSON (example: https://lottiefiles.com/animated-bus
+)
+
+Each bus marker should:
+
+Move smoothly along its route based on GPS updates
+
+Rotate according to direction of travel
+
+Leave a faint green-blue glowing trail to represent “eco routing”
+
+Bounce slightly when idle (Framer Motion animation)
+
+📍 REGIONAL LOCATIONS
+
+Add bus stop markers with small labels and icons for:
+
+Mysuru: VVIET College, City Bus Stand, Bannimantap, Kuvempunagar
+
+Bengaluru: Majestic, Kengeri, Indiranagar, Yeshwanthpur
+
+Each marker:
+
+Has hover popup → “Next Bus: ETA 4 mins | Route: 145B”
+
+Shows small animated wave pulse around active stops
+
+🧭 MAP FEATURES
+
+Dynamic live map switching between Mysuru and Bengaluru (dropdown selector on dashboard)
+
+Button on map: “🗺️ Recenter to My Location”
+
+Uses navigator.geolocation API to zoom to user’s exact position
+
+Show passenger’s current location as glowing green circle
+
+Nearby buses animate when within 1 km of passenger’s location
+
+🧠 AI INTEGRATION
+
+Display AI ETA predictions beside each bus marker:
+“ETA: 6 mins | 3.4 km away”
+
+Color code based on time:
+
+🟢 <5 mins → On Time
+
+🟠 5–10 mins → Slight Delay
+
+🔴 >10 mins → Delayed
+
+🌱 ECO VISUAL EFFECTS
+
+Map background tint: subtle teal-blue overlay to match theme
+
+Add animated floating leaves or eco icons (optional)
+
+Bus routes should glow in gradient (from-[#00A896] to-[#0066FF])
+
+Use pop-in animation for new buses entering the route
+
+🧩 UI IMPROVEMENTS
+
+Add dropdown top-left: “Select City → Mysuru / Bengaluru”
+
+Add “Active Buses” list on right side panel
+
+Shows live bus numbers, ETA, and status
+
+Clicking a bus centers the map on that bus
+
+Add smooth transition effects (Framer Motion) for all animations
+
+🪩 COLOR PALETTE & FONT FIX
+
+Use high-contrast, readable design (no washed-out text):
+
+Element	Color	Description
+Background	#0B132B	Deep navy backdrop
+Bus Trail	Gradient #00A896 → #0066FF	Eco & tech fusion
+Stop Marker	#B2FF59	Lime green
+Fonts	Poppins (Headings), Inter (Body)	
+Text	#F8FAFC (White)	
+Accent Buttons	Gradient from #00A896 to #004E92	
+Highlight	#FFB400 for alerts & ETA badges	
+
+Add soft glow shadows, floating card effects, and hover animations on tooltips and buttons.
+
+🖥️ DASHBOARD INTEGRATION
+
+Integrate the map into the main passenger dashboard, below the search bar.
+
+Above the map:
+
+Show a search input → “🔍 Enter Bus Number or Route”
+
+Button → “Pin Bus”
+
+Below the map:
+
+Eco insights panel → “You saved 2.1kg CO₂ this week 🌱”
+
+Add top navigation:
+
+Home | Dashboard | Eco Stats | SOS | Chatbot | Logout
+
+🚨 SOS ON MAP
+
+Add small floating SOS button (bottom-right) → red glow animation.
+
+On click → sends current location to backend and flashes marker on map.
+
+Add toast notification “SOS Alert Sent Successfully!”
+
+🌐 GEOLOGICAL DETAILS (INDIA SPECIFIC)
+
+Use India region map tiles only.
+
+Disable unnecessary foreign POIs.
+
+Add local labels (Mysuru Palace, Chamundi Hills, Majestic, etc.)
+
+Use Indian time zone (Asia/Kolkata) for all timestamps.
+
+💫 ANIMATED LANDING PAGE
+
+For the main homepage:
+
+Background: Animated Indian eco-city skyline (SVG)
+
+Show moving bus icons from Mysuru → Bengaluru
+
+Floating tagline: “Smarter Routes. Greener Karnataka.”
+
+Buttons:
+
+[Get Started] → leads to login
+
+[Track Bus] → opens passenger dashboard
+
+💚 FINAL VISUAL GOAL
+
+Deliver a beautiful, India-focused BusBuddy map system:
+✅ Default view over Karnataka
+✅ Smoothly moving bus animations
+✅ Passenger live tracking
+✅ Clear, aesthetic fonts and colors
+✅ All cities labeled in India context
+✅ Eco-friendly visuals matching the “Green Intelligence” theme
+✅ Fully integrated with existing login/dashboard/chatbot setup.
+
+
+---
+
+### ✅ RESULT (What You’ll See After Pasting This)
+🌍 The map will:
+- Open centered between **Mysuru & Bengaluru**, not New York  
+- Show **Indian locations and names**
+- Animate buses moving live along routes  
+- Display bus ETAs, stops, and your current location  
+- Match the **BusBuddy color palette + eco aesthetic**
+- Look professional and futuristic ✨  
+
+---
+
+💚 **Extra Tip:**  
+To make sure your map always loads Indian tiles:
+1. Use this API link format:
+
+
+https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&region=IN
+
+2. Add this property in `GoogleMap`:
+```js
+options={{
+  region: "IN",
+  mapTypeId: "roadmap",
+  zoomControl: true,
+  streetViewControl: false,
+  disableDefaultUI: false,
+  restriction: {
+    latLngBounds: {
+      north: 18.0,
+      south: 10.5,
+      east: 78.5,
+      west: 74.0
+    },
+    strictBounds: true,
+  },
+}}
+
+
+This locks the map view to Karnataka 🚏

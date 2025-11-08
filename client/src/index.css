@@ -7,7 +7,7 @@
   /* Electric Blue #0066FF, Eco Green #00A896, Lime #B2FF59, Deep Navy #0B132B */
   --electric-blue: 216 100% 50%;
   --eco-green: 175 100% 33%;
-  --lime: 79 100% 67%;
+  --lime: 96 100% 68%;
   --deep-navy: 219 62% 10%;
   --glass-bg: rgba(255, 255, 255, 0.08);
   --white-text: 210 40% 98%;
@@ -40,7 +40,7 @@
   --secondary-foreground: 210 40% 98%;
   --muted: 216 30% 20%;
   --muted-foreground: 210 20% 70%;
-  --accent: 79 100% 67%;
+  --accent: 96 100% 68%;
   --accent-foreground: 219 62% 10%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
@@ -125,7 +125,7 @@
   --secondary-foreground: 210 40% 98%;
   --muted: 216 30% 20%;
   --muted-foreground: 210 20% 70%;
-  --accent: 79 100% 67%;
+  --accent: 96 100% 68%;
   --accent-foreground: 219 62% 10%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;

@@ -11,9 +11,10 @@ const mapContainerStyle = {
   borderRadius: "1rem",
 };
 
+// Karnataka center point between Mysuru (12.2958, 76.6394) and Bengaluru (12.9716, 77.5946)
 const defaultCenter = {
-  lat: 40.7128,
-  lng: -74.0060,
+  lat: 12.6337,
+  lng: 77.1175,
 };
 
 interface BusMapProps {
