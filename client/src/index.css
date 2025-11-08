@@ -2,47 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+/* BusBuddy Theme Colors */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
+  /* Electric Blue #0066FF, Eco Green #00A896, Lime #B2FF59, Deep Navy #0B132B */
+  --electric-blue: 216 100% 50%;
+  --eco-green: 175 100% 33%;
+  --lime: 79 100% 67%;
+  --deep-navy: 219 62% 10%;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --white-text: 210 40% 98%;
+  
+  --button-outline: rgba(0,102,255, .30);
+  --badge-outline: rgba(0,168,150, .25);
   --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
-  --background: 0 0% 100%;
-  --foreground: 0 0% 9%;
-  --border: 0 0% 91%;
-  --card: 0 0% 98%;
-  --card-foreground: 0 0% 9%;
-  --card-border: 0 0% 94%;
-  --sidebar: 0 0% 96%;
-  --sidebar-foreground: 0 0% 9%;
-  --sidebar-border: 0 0% 92%;
-  --sidebar-primary: 142 76% 36%;
-  --sidebar-primary-foreground: 144 80% 98%;
-  --sidebar-accent: 0 0% 90%;
-  --sidebar-accent-foreground: 0 0% 9%;
-  --sidebar-ring: 142 76% 36%;
-  --popover: 0 0% 94%;
-  --popover-foreground: 0 0% 9%;
-  --popover-border: 0 0% 90%;
-  --primary: 142 76% 36%;
-  --primary-foreground: 144 80% 98%;
-  --secondary: 0 0% 88%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 140 6% 90%;
-  --muted-foreground: 0 0% 35%;
-  --accent: 140 8% 88%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84% 42%;
-  --destructive-foreground: 0 85% 98%;
-  --input: 0 0% 75%;
-  --ring: 142 76% 36%;
-  --chart-1: 142 76% 36%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 49%;
-  --chart-5: 27 87% 47%;
+  --elevate-1: rgba(0,102,255, .05);
+  --elevate-2: rgba(0,168,150, .10);
+  --background: 219 62% 10%;
+  --foreground: 210 40% 98%;
+  --border: 216 40% 25%;
+  --card: 219 60% 12%;
+  --card-foreground: 210 40% 98%;
+  --card-border: 216 50% 20%;
+  --sidebar: 219 62% 11%;
+  --sidebar-foreground: 210 40% 98%;
+  --sidebar-border: 216 50% 18%;
+  --sidebar-primary: 216 100% 50%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 175 100% 33%;
+  --sidebar-accent-foreground: 210 40% 98%;
+  --sidebar-ring: 216 100% 50%;
+  --popover: 219 60% 13%;
+  --popover-foreground: 210 40% 98%;
+  --popover-border: 216 50% 20%;
+  --primary: 216 100% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 175 100% 33%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 216 30% 20%;
+  --muted-foreground: 210 20% 70%;
+  --accent: 79 100% 67%;
+  --accent-foreground: 219 62% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --input: 216 40% 25%;
+  --ring: 216 100% 50%;
+  --chart-1: 216 100% 50%;
+  --chart-2: 175 100% 33%;
+  --chart-3: 79 100% 67%;
+  --chart-4: 195 100% 45%;
+  --chart-5: 260 80% 60%;
   --font-sans: Inter, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
@@ -88,45 +96,46 @@
 }
 
 .dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
+  /* Same as root - always use Deep Navy theme */
+  --button-outline: rgba(0,102,255, .30);
+  --badge-outline: rgba(0,168,150, .25);
   --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
-  --background: 0 0% 7%;
-  --foreground: 0 0% 98%;
-  --border: 0 0% 16%;
-  --card: 0 0% 9%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 0 0% 12%;
-  --sidebar: 0 0% 11%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-border: 0 0% 14%;
-  --sidebar-primary: 142 76% 36%;
-  --sidebar-primary-foreground: 144 80% 98%;
-  --sidebar-accent: 0 0% 15%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 142 76% 36%;
-  --popover: 0 0% 13%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 0 0% 16%;
-  --primary: 142 76% 36%;
-  --primary-foreground: 144 80% 98%;
-  --secondary: 0 0% 17%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 140 6% 16%;
-  --muted-foreground: 0 0% 65%;
-  --accent: 140 8% 15%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 84% 42%;
-  --destructive-foreground: 0 85% 98%;
-  --input: 0 0% 30%;
-  --ring: 142 76% 36%;
-  --chart-1: 142 70% 65%;
-  --chart-2: 173 58% 65%;
-  --chart-3: 197 37% 70%;
-  --chart-4: 43 74% 70%;
-  --chart-5: 27 87% 65%;
+  --elevate-1: rgba(0,102,255, .05);
+  --elevate-2: rgba(0,168,150, .10);
+  --background: 219 62% 10%;
+  --foreground: 210 40% 98%;
+  --border: 216 40% 25%;
+  --card: 219 60% 12%;
+  --card-foreground: 210 40% 98%;
+  --card-border: 216 50% 20%;
+  --sidebar: 219 62% 11%;
+  --sidebar-foreground: 210 40% 98%;
+  --sidebar-border: 216 50% 18%;
+  --sidebar-primary: 216 100% 50%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 175 100% 33%;
+  --sidebar-accent-foreground: 210 40% 98%;
+  --sidebar-ring: 216 100% 50%;
+  --popover: 219 60% 13%;
+  --popover-foreground: 210 40% 98%;
+  --popover-border: 216 50% 20%;
+  --primary: 216 100% 50%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 175 100% 33%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 216 30% 20%;
+  --muted-foreground: 210 20% 70%;
+  --accent: 79 100% 67%;
+  --accent-foreground: 219 62% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --input: 216 40% 25%;
+  --ring: 216 100% 50%;
+  --chart-1: 216 100% 65%;
+  --chart-2: 175 100% 55%;
+  --chart-3: 79 100% 75%;
+  --chart-4: 195 100% 60%;
+  --chart-5: 260 80% 70%;
   --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
@@ -336,7 +345,7 @@
   }
 
   .eco-gradient-text {
-    background: linear-gradient(135deg, #00A896 0%, #0066FF 100%);
+    background: linear-gradient(135deg, #00A896 0%, #0066FF 50%, #B2FF59 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -345,34 +354,97 @@
   }
 
   .animated-gradient-bg {
-    background: linear-gradient(135deg, #004E92 0%, #00A896 50%, #0072BB 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 8s ease infinite;
+    background: linear-gradient(135deg, #0B132B 0%, #0066FF 30%, #00A896 70%, #0B132B 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+  
+  .electric-glow {
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.3), 0 0 40px rgba(0, 102, 255, 0.2);
+  }
+  
+  .eco-glow {
+    box-shadow: 0 0 20px rgba(0, 168, 150, 0.3), 0 0 40px rgba(0, 168, 150, 0.2);
+  }
+  
+  .lime-glow {
+    box-shadow: 0 0 20px rgba(178, 255, 89, 0.4), 0 0 40px rgba(178, 255, 89, 0.2);
   }
 
-  /* Glassmorphism utilities */
+  /* Enhanced Glassmorphism */
   .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .dark .glass {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
-
-  .dark .glass-strong {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+  
+  .glass-card {
+    background: rgba(11, 19, 43, 0.7);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border: 1px solid rgba(0, 168, 150, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 102, 255, 0.1);
+  }
+  
+  .glass-card:hover {
+    background: rgba(11, 19, 43, 0.8);
+    border: 1px solid rgba(0, 168, 150, 0.3);
+    box-shadow: 0 12px 48px 0 rgba(0, 102, 255, 0.2);
+    transform: translateY(-4px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* CO2 Counter Animations */
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @keyframes numberPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  .co2-counter {
+    animation: countUp 0.6s ease-out, numberPulse 2s ease-in-out infinite;
+  }
+  
+  /* Bus marker pulse */
+  @keyframes markerPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 168, 150, 0.7);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 10px rgba(0, 168, 150, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 168, 150, 0);
+    }
+  }
+  
+  .bus-marker {
+    animation: markerPulse 2s infinite;
   }
 
   /* Floating card hover effect */

@@ -1,0 +1,266 @@
+🧑‍✈️ Goal of the Driver Module
+
+To give bus drivers a smart, easy-to-use mobile dashboard that handles:
+
+Real-time GPS tracking
+
+Document uploads & validation
+
+Eco-driving insights
+
+Automatic notifications for document expiry
+
+Emergency SOS support
+
+Full data sync with Admin dashboard
+
+This ensures accountability, transparency, and eco-compliance — while making life easier for drivers.
+
+⚙️ Driver App Login & Setup
+🧩 During Sign Up / Login
+
+Drivers must provide:
+
+✅ Full Name
+
+✅ Vehicle Number (Registration No.) — e.g., KA09 F 1234
+
+✅ Driving License (DL) Number
+
+✅ Bus Route (e.g., VVIET to City Bus Stand)
+
+✅ Phone Number / Email
+
+✅ Password / OTP Login
+
+Once logged in:
+
+Driver’s GPS location starts transmitting automatically (after permission granted).
+
+The bus is linked to this driver using Vehicle Number.
+
+Admin and passengers can now track that specific bus live.
+
+🧾 Smart Documentation System (Eco-Compliance)
+🧠 AI-Driven Doc Management
+
+Drivers upload the following documents only once:
+
+Pollution Under Control (PUC) Certificate
+
+Fitness Certificate
+
+Driving License (DL)
+
+Vehicle Registration Certificate (RC)
+
+🔐 What Happens Next:
+
+Each document’s expiry date is extracted and stored in Firebase (or AI text reader like Google Vision API).
+
+The system auto-calculates validity:
+
+✅ Valid until...
+
+⚠️ Expiring soon...
+
+❌ Expired! Renewal Required.
+
+Drivers get a notification reminder 15 days before expiry.
+
+Admin receives alerts for expired certificates.
+
+🧩 Example Data Model (Firestore)
+{
+  "vehicle_number": "KA09F1234",
+  "driver_id": "UID001",
+  "PUC_valid_till": "2026-03-12",
+  "Fitness_valid_till": "2025-07-10",
+  "DL_valid_till": "2027-05-15",
+  "status": "Active"
+}
+
+📢 Notification Example
+
+⚠️ “Dear Driver, your Fitness Certificate for Bus KA09 F 1234 will expire in 10 days. Please renew soon to stay eco-compliant.”
+
+📡 GPS Integration (Auto-Tracking)
+
+On driver login, app requests GPS permission.
+
+Location updates are sent to Firebase Realtime Database every 5 seconds.
+
+These coordinates are:
+
+Used by passengers to see live bus movement.
+
+Used by AI model for ETA prediction.
+
+Visible on admin map dashboard.
+
+Example:
+{
+  "vehicle_number": "KA09F1234",
+  "location": {
+    "lat": 12.2958,
+    "lng": 76.6394
+  },
+  "timestamp": "2025-11-08T14:20:00Z"
+}
+
+🧠 Eco-Driving Insights (AI Feedback)
+
+The driver panel includes an “Eco Insights” section:
+
+Displays daily fuel usage.
+
+AI feedback like:
+
+“Avoid frequent braking.”
+
+“You saved 1.3L fuel today by efficient driving.”
+
+Shows Eco Score (0–100).
+
+🗺️ Route Panel
+
+Assigned route displayed with stops and ETA per stop.
+
+Color-coded route progress bar:
+
+🟢 On time
+
+🟠 Slightly delayed
+
+🔴 Late
+
+Driver can tap:
+
+🚦 “Start Trip” → activates GPS tracking
+
+🏁 “End Trip” → stops tracking
+
+🆘 SOS System for Drivers
+
+Adapted from the GitHub repo (tony007-ux/hackthon
+):
+
+“SOS” button visible in driver’s app.
+
+On click:
+
+Sends driver’s current location + vehicle number to:
+
+Admin Dashboard
+
+Nearby Police Control Room API
+
+Triggers visual alert in admin panel (“Bus KA09F1234 – Emergency Alert!”).
+
+Option to call emergency helpline directly.
+
+🧑‍💼 Admin–Driver Sync
+Admin Dashboard	Driver App
+Can view all registered drivers	Shows driver’s linked bus
+Sees uploaded documents	Tracks status (Valid/Expiring)
+Receives expiry alerts	Sends renewal reminders
+View live GPS of each bus	Driver auto-shares location
+Can suspend unfit buses	Driver sees compliance warning
+🧾 Driver UI Layout (Mobile App Design)
+
+🎨 Screen 1: Login / Sign Up
+
+Input: Name, Phone, Vehicle No, DL Number
+
+Button: “Start Driving”
+
+Auto GPS detection
+
+🎨 Screen 2: Route Dashboard
+
+Map showing route + current position
+
+“Start Trip / End Trip” button
+
+ETA per stop displayed
+
+🎨 Screen 3: Documents Section
+
+Upload buttons for PUC, Fitness, DL, RC
+
+Shows validity & renewal status
+
+“Renew Now” button if expiring
+
+🎨 Screen 4: Eco Insights
+
+Animated fuel efficiency gauge
+
+Eco score bar
+
+AI driving tips
+
+🎨 Screen 5: SOS Button
+
+Big red circular “SOS” button
+
+Confirmation modal → triggers alert
+
+🧠 Driver AI Workflow Summary
+Login → GPS Activated → Route Started
+↓
+GPS → Firestore (Real-Time)
+↓
+ETA Prediction → FastAPI AI Model
+↓
+Bus visible to Passenger Dashboard
+↓
+Driver uploads documents once
+↓
+Firebase checks validity dates daily
+↓
+Driver & Admin get renewal alerts
+↓
+Driver earns Eco Score for responsible driving
+
+🧩 Bonus Features for Future Expansion
+
+🧾 Auto OCR Scan for document upload (no manual typing).
+
+🧠 Driver performance report (average punctuality, eco score, route adherence).
+
+🌍 Leaderboard: “Top 10 Eco Drivers of Karnataka.”
+
+🪫 Low connectivity fallback: location cached offline, syncs later.
+
+🧭 Replit Prompt (Final for DRIVER SYSTEM)
+
+Enhance the BusBuddy system by building a Driver Module with the following:
+
+Sign Up / Login that asks: Full Name, Vehicle Number, DL Number, Phone, Route.
+
+GPS integration that shares driver’s live location every 5 seconds with Firebase.
+
+Document upload (PUC, Fitness, DL, RC) stored in Firestore with expiry validation.
+
+Notification system that auto-reminds driver 15 days before expiry.
+
+Eco Insights dashboard showing fuel efficiency and AI driving tips.
+
+Route Panel with start/end trip button and stop-wise ETA.
+
+SOS button (based on GitHub repo logic) that sends emergency data (location, bus ID, driver ID) to Admin & Police APIs.
+
+Ensure the UI is clean, responsive, glassmorphic, and eco-themed (green-blue gradient).
+
+All data synced with Admin and visible on Passenger live map.
+
+🧠 How It Connects
+
+Passenger → Tracks driver’s live bus & ETA.
+
+Driver → Sends GPS & document info.
+
+Admin → Validates, monitors, and manages.
+
+This ensures every bus, driver, and passenger is part of one smart connected ecosystem for Greener Karnataka 🌿.
