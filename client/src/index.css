@@ -285,4 +285,107 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  /* Color-shifting animations for eco metrics */
+  @keyframes colorShift {
+    0% { color: #00A896; }
+    50% { color: #0066FF; }
+    100% { color: #00A896; }
+  }
+
+  @keyframes colorShiftGradient {
+    0% { 
+      background: linear-gradient(135deg, #00A896 0%, #0066FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    50% { 
+      background: linear-gradient(135deg, #0066FF 0%, #00FF88 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    100% { 
+      background: linear-gradient(135deg, #00A896 0%, #0066FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 1;
+      filter: brightness(1);
+    }
+    50% { 
+      opacity: 0.8;
+      filter: brightness(1.2);
+    }
+  }
+
+  .eco-text-shift {
+    animation: colorShift 3s infinite alternate;
+  }
+
+  .eco-gradient-text {
+    background: linear-gradient(135deg, #00A896 0%, #0066FF 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+  }
+
+  .animated-gradient-bg {
+    background: linear-gradient(135deg, #0ea5e9 0%, #10b981 50%, #3b82f6 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  /* Glassmorphism utilities */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass-strong {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Floating card hover effect */
+  .float-on-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .float-on-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark .float-on-hover:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
 }

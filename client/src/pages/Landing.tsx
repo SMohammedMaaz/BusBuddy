@@ -1,10 +1,32 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
+import BgBuses from "@/components/BgBuses";
 import { MapPin, Zap, Leaf, Shield, TrendingUp, Users } from "lucide-react";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.9 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5 }
+};
 
 export default function Landing() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -16,171 +38,293 @@ export default function Landing() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-green-950">
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
-              <MapPin className="w-6 h-6 text-white" />
-            </div>
-            <h1 className="text-2xl font-display font-bold bg-gradient-to-r from-green-600 to-green-800 dark:from-green-400 dark:to-green-600 bg-clip-text text-transparent">
-              BusBuddy
-            </h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              onClick={() => setAuthModalOpen(true)}
-              data-testid="button-signin-header"
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="fixed inset-0 animated-gradient-bg" />
+      
+      {/* Floating buses animation */}
+      <BgBuses />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <motion.div 
+              className="flex items-center gap-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Sign In
-            </Button>
-            <Button
-              onClick={() => setAuthModalOpen(true)}
-              className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
-              data-testid="button-get-started-header"
+              <motion.div 
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <MapPin className="w-6 h-6 text-white" />
+              </motion.div>
+              <h1 className="text-2xl font-display font-bold eco-gradient-text">
+                BusBuddy
+              </h1>
+            </motion.div>
+            <motion.div 
+              className="flex items-center gap-3"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Get Started
-            </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setAuthModalOpen(true)}
+                className="hover-elevate"
+                data-testid="button-signin-header"
+              >
+                Sign In
+              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg"
+                  data-testid="button-get-started-header"
+                >
+                  Get Started
+                </Button>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <section className="min-h-screen flex items-center justify-center px-6 pt-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="animate-float">
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-6 bg-gradient-to-r from-green-600 via-green-700 to-green-800 dark:from-green-400 dark:via-green-500 dark:to-green-600 bg-clip-text text-transparent">
-              Green Intelligence for
-              <br />
-              Sustainable Transit
-            </h2>
+        {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-center px-6 pt-20">
+          <div className="max-w-7xl mx-auto text-center">
+            <motion.div
+              {...fadeInUp}
+              className="mb-8"
+            >
+              <motion.h2 
+                className="text-5xl md:text-7xl font-display font-bold mb-6 text-white drop-shadow-2xl"
+                animate={{ 
+                  textShadow: [
+                    "0 0 20px rgba(16, 185, 129, 0.5)",
+                    "0 0 40px rgba(16, 185, 129, 0.8)",
+                    "0 0 20px rgba(16, 185, 129, 0.5)"
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Green Intelligence for
+                <br />
+                <span className="eco-gradient-text">Sustainable Transit</span>
+              </motion.h2>
+            </motion.div>
+            
+            <motion.p 
+              {...fadeInUp}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto drop-shadow-lg"
+            >
+              Track your city bus in real-time with AI-powered ETA predictions. Save CO₂, reduce fuel waste, and contribute to a sustainable planet.
+            </motion.p>
+            
+            <motion.div
+              {...scaleIn}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                size="lg"
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-white text-green-700 hover:bg-white/90 text-lg px-12 py-8 h-auto rounded-2xl shadow-2xl font-bold animate-float"
+                data-testid="button-get-started-hero"
+              >
+                Get Started
+                <Zap className="ml-2 h-6 w-6 animate-pulse" />
+              </Button>
+            </motion.div>
+
+            <motion.div 
+              className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
+              <motion.div variants={fadeInUp}>
+                <Card className="p-8 glass-strong hover:scale-105 transition-transform duration-300 border-white/20">
+                  <motion.div 
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mb-6 mx-auto shadow-xl"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </motion.div>
+                  <h3 className="font-bold text-2xl mb-2 eco-gradient-text">1.2M kg</h3>
+                  <p className="text-white/80 font-medium">CO₂ Saved This Month</p>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card className="p-8 glass-strong hover:scale-105 transition-transform duration-300 border-white/20">
+                  <motion.div 
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 mx-auto shadow-xl"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <MapPin className="w-8 h-8 text-white" />
+                  </motion.div>
+                  <h3 className="font-bold text-2xl mb-2 text-blue-300">500+</h3>
+                  <p className="text-white/80 font-medium">Active Buses Tracked</p>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card className="p-8 glass-strong hover:scale-105 transition-transform duration-300 border-white/20">
+                  <motion.div 
+                    className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-6 mx-auto shadow-xl"
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Users className="w-8 h-8 text-white" />
+                  </motion.div>
+                  <h3 className="font-bold text-2xl mb-2 text-purple-300">50K+</h3>
+                  <p className="text-white/80 font-medium">Eco-Conscious Users</p>
+                </Card>
+              </motion.div>
+            </motion.div>
           </div>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Track your city bus in real-time with AI-powered ETA predictions. Save CO₂, reduce fuel waste, and contribute to a sustainable planet.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => setAuthModalOpen(true)}
-            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-lg px-8 py-6 h-auto"
-            data-testid="button-get-started-hero"
-          >
-            Get Started
-            <Zap className="ml-2 h-5 w-5" />
-          </Button>
+        </section>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Card className="p-6 backdrop-blur-xl bg-white/60 dark:bg-gray-900/60 border-white/20 hover-elevate">
-              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
-                <TrendingUp className="w-6 h-6 text-green-600 dark:text-green-400" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">1.2M kg CO₂ Saved</h3>
-              <p className="text-sm text-muted-foreground">This month across all cities</p>
-            </Card>
-            <Card className="p-6 backdrop-blur-xl bg-white/60 dark:bg-gray-900/60 border-white/20 hover-elevate">
-              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-                <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">500+ Active Buses</h3>
-              <p className="text-sm text-muted-foreground">Real-time tracking nationwide</p>
-            </Card>
-            <Card className="p-6 backdrop-blur-xl bg-white/60 dark:bg-gray-900/60 border-white/20 hover-elevate">
-              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">50K+ Users</h3>
-              <p className="text-sm text-muted-foreground">Making eco-friendly choices daily</p>
-            </Card>
+        {/* Features Section */}
+        <section className="py-32 px-6 relative">
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
+          <div className="max-w-7xl mx-auto relative z-10">
+            <motion.h2 
+              className="text-5xl font-display font-bold text-center mb-20 text-white drop-shadow-lg"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              Intelligent Features for a <span className="eco-gradient-text">Greener Future</span>
+            </motion.h2>
+            
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              {[
+                {
+                  icon: MapPin,
+                  gradient: "from-green-400 to-green-600",
+                  title: "Real-Time GPS Tracking",
+                  description: "See exactly where your bus is on an interactive map with live location updates every few seconds."
+                },
+                {
+                  icon: Zap,
+                  gradient: "from-blue-400 to-blue-600",
+                  title: "AI-Powered ETA",
+                  description: "Get accurate arrival predictions using machine learning that factors in traffic, speed, and historical patterns."
+                },
+                {
+                  icon: Leaf,
+                  gradient: "from-emerald-400 to-emerald-600",
+                  title: "Eco-Route Optimizer",
+                  description: "Discover the most fuel-efficient routes and see your personal CO₂ savings grow with every trip."
+                },
+                {
+                  icon: Shield,
+                  gradient: "from-purple-400 to-purple-600",
+                  title: "Role-Based Access",
+                  description: "Tailored dashboards for passengers, drivers, and administrators with features specific to each role."
+                },
+                {
+                  icon: TrendingUp,
+                  gradient: "from-orange-400 to-orange-600",
+                  title: "Analytics Dashboard",
+                  description: "Track your environmental impact with beautiful visualizations of CO₂ savings and fuel efficiency."
+                },
+                {
+                  icon: Users,
+                  gradient: "from-pink-400 to-pink-600",
+                  title: "Community Impact",
+                  description: "Join thousands making a difference. See collective sustainability achievements across all users."
+                }
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                >
+                  <motion.div
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="p-8 glass-strong border-white/20 h-full">
+                      <motion.div 
+                        className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-2xl`}
+                        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <feature.icon className="w-10 h-10 text-white" />
+                      </motion.div>
+                      <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
+                      <p className="text-white/80 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </Card>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="py-32 px-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-display font-bold text-center mb-16">
-            Intelligent Features for a Greener Future
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center mb-6">
-                <MapPin className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Real-Time GPS Tracking</h3>
-              <p className="text-muted-foreground">
-                See exactly where your bus is on an interactive map with live location updates every few seconds.
-              </p>
-            </Card>
-
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-6">
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">AI-Powered ETA</h3>
-              <p className="text-muted-foreground">
-                Get accurate arrival predictions using machine learning that factors in traffic, speed, and historical patterns.
-              </p>
-            </Card>
-
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center mb-6">
-                <Leaf className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Eco-Route Optimizer</h3>
-              <p className="text-muted-foreground">
-                Discover the most fuel-efficient routes and see your personal CO₂ savings grow with every trip.
-              </p>
-            </Card>
-
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-6">
-                <Shield className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Role-Based Access</h3>
-              <p className="text-muted-foreground">
-                Tailored dashboards for passengers, drivers, and administrators with features specific to each role.
-              </p>
-            </Card>
-
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-6">
-                <TrendingUp className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Analytics Dashboard</h3>
-              <p className="text-muted-foreground">
-                Track your environmental impact with beautiful visualizations of CO₂ savings and fuel efficiency.
-              </p>
-            </Card>
-
-            <Card className="p-8 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 hover-elevate">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center mb-6">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Community Impact</h3>
-              <p className="text-muted-foreground">
-                Join thousands making a difference. See collective sustainability achievements across all users.
-              </p>
-            </Card>
+        {/* CTA Section */}
+        <section className="py-32 px-6 relative">
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <motion.h2 
+              className="text-5xl font-display font-bold mb-8 text-white drop-shadow-lg"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              Ready to Make a <span className="eco-gradient-text">Difference</span>?
+            </motion.h2>
+            <motion.p 
+              className="text-2xl text-white/90 mb-12 drop-shadow"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              Join BusBuddy today and be part of the movement towards sustainable urban transportation.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                size="lg"
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-white text-green-700 hover:bg-white/90 text-xl px-12 py-8 h-auto rounded-2xl shadow-2xl font-bold"
+                data-testid="button-get-started-footer"
+              >
+                Get Started Now
+                <Zap className="ml-3 h-6 w-6" />
+              </Button>
+            </motion.div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-display font-bold mb-6">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Join BusBuddy today and be part of the movement towards sustainable urban transportation.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => setAuthModalOpen(true)}
-            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-lg px-8 py-6 h-auto"
-            data-testid="button-get-started-footer"
-          >
-            Get Started Now
-          </Button>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
