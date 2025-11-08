@@ -7,13 +7,19 @@ import {
   type InsertAnalytics,
   type Route,
   type InsertRoute,
+  type BusCompliance,
+  type InsertBusCompliance,
+  type ProximityAlert,
+  type InsertProximityAlert,
   users,
   buses,
   routes,
-  analytics
+  analytics,
+  busCompliance,
+  proximityAlerts
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -34,6 +40,17 @@ export interface IStorage {
   getLatestAnalytics(): Promise<Analytics | undefined>;
   createAnalytics(analytics: InsertAnalytics): Promise<Analytics>;
   updateAnalytics(id: string, data: Partial<Analytics>): Promise<void>;
+  
+  getAllCompliance(): Promise<BusCompliance[]>;
+  getComplianceByBusId(busId: string): Promise<BusCompliance | undefined>;
+  createCompliance(compliance: InsertBusCompliance): Promise<BusCompliance>;
+  updateCompliance(id: string, data: Partial<BusCompliance>): Promise<void>;
+  
+  getProximityAlerts(userId: string): Promise<ProximityAlert[]>;
+  getProximityAlertByUserAndBus(userId: string, busId: string): Promise<ProximityAlert | undefined>;
+  createProximityAlert(alert: InsertProximityAlert): Promise<ProximityAlert>;
+  deleteProximityAlert(id: string): Promise<void>;
+  updateProximityAlert(id: string, data: Partial<ProximityAlert>): Promise<void>;
 }
 
 export class DbStorage implements IStorage {
@@ -111,6 +128,51 @@ export class DbStorage implements IStorage {
 
   async updateAnalytics(id: string, data: Partial<Analytics>): Promise<void> {
     await db.update(analytics).set(data).where(eq(analytics.id, id));
+  }
+
+  async getAllCompliance(): Promise<BusCompliance[]> {
+    return await db.select().from(busCompliance);
+  }
+
+  async getComplianceByBusId(busId: string): Promise<BusCompliance | undefined> {
+    const result = await db.select().from(busCompliance).where(eq(busCompliance.busId, busId)).limit(1);
+    return result[0];
+  }
+
+  async createCompliance(insertCompliance: InsertBusCompliance): Promise<BusCompliance> {
+    const result = await db.insert(busCompliance).values(insertCompliance).returning();
+    return result[0];
+  }
+
+  async updateCompliance(id: string, data: Partial<BusCompliance>): Promise<void> {
+    await db.update(busCompliance).set(data).where(eq(busCompliance.id, id));
+  }
+
+  async getProximityAlerts(userId: string): Promise<ProximityAlert[]> {
+    return await db.select().from(proximityAlerts).where(eq(proximityAlerts.userId, userId));
+  }
+
+  async getProximityAlertByUserAndBus(userId: string, busId: string): Promise<ProximityAlert | undefined> {
+    const result = await db.select().from(proximityAlerts)
+      .where(and(
+        eq(proximityAlerts.userId, userId),
+        eq(proximityAlerts.busId, busId)
+      ))
+      .limit(1);
+    return result[0];
+  }
+
+  async createProximityAlert(insertAlert: InsertProximityAlert): Promise<ProximityAlert> {
+    const result = await db.insert(proximityAlerts).values(insertAlert).returning();
+    return result[0];
+  }
+
+  async deleteProximityAlert(id: string): Promise<void> {
+    await db.delete(proximityAlerts).where(eq(proximityAlerts.id, id));
+  }
+
+  async updateProximityAlert(id: string, data: Partial<ProximityAlert>): Promise<void> {
+    await db.update(proximityAlerts).set(data).where(eq(proximityAlerts.id, id));
   }
 }
 

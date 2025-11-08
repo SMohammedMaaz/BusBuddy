@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertBusSchema, insertUserSchema, insertAnalyticsSchema, insertRouteSchema } from "@shared/schema";
+import { insertBusSchema, insertUserSchema, insertAnalyticsSchema, insertRouteSchema, insertBusComplianceSchema, insertProximityAlertSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -187,6 +187,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       res.status(500).json({ error: "Failed to calculate ETA" });
+    }
+  });
+
+  app.get("/api/compliance", async (_req, res) => {
+    try {
+      const compliance = await storage.getAllCompliance();
+      res.json(compliance);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch compliance data" });
+    }
+  });
+
+  app.get("/api/compliance/bus/:busId", async (req, res) => {
+    try {
+      const compliance = await storage.getComplianceByBusId(req.params.busId);
+      if (!compliance) {
+        return res.status(404).json({ error: "Compliance data not found" });
+      }
+      res.json(compliance);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch compliance data" });
+    }
+  });
+
+  app.post("/api/compliance", async (req, res) => {
+    try {
+      const validatedData = insertBusComplianceSchema.parse(req.body);
+      const compliance = await storage.createCompliance(validatedData);
+      res.status(201).json(compliance);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create compliance record" });
+    }
+  });
+
+  app.patch("/api/compliance/:id", async (req, res) => {
+    try {
+      await storage.updateCompliance(req.params.id, req.body);
+      res.json({ message: "Compliance updated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update compliance" });
+    }
+  });
+
+  app.get("/api/proximity-alerts/user/:userId", async (req, res) => {
+    try {
+      const alerts = await storage.getProximityAlerts(req.params.userId);
+      res.json(alerts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch proximity alerts" });
+    }
+  });
+
+  app.post("/api/proximity-alerts", async (req, res) => {
+    try {
+      const validatedData = insertProximityAlertSchema.parse(req.body);
+      const alert = await storage.createProximityAlert(validatedData);
+      res.status(201).json(alert);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      res.status(500).json({ error: "Failed to create proximity alert" });
+    }
+  });
+
+  app.delete("/api/proximity-alerts/:id", async (req, res) => {
+    try {
+      await storage.deleteProximityAlert(req.params.id);
+      res.json({ message: "Proximity alert deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete proximity alert" });
+    }
+  });
+
+  app.patch("/api/proximity-alerts/:id", async (req, res) => {
+    try {
+      await storage.updateProximityAlert(req.params.id, req.body);
+      res.json({ message: "Proximity alert updated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update proximity alert" });
     }
   });
 

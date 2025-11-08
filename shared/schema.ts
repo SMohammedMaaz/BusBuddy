@@ -45,6 +45,27 @@ export const analytics = pgTable("analytics", {
   avgBusSpeed: real("avg_bus_speed").notNull().default(0),
 });
 
+export const busCompliance = pgTable("bus_compliance", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  busId: varchar("bus_id").references(() => buses.id).notNull(),
+  pollutionCertExpiry: timestamp("pollution_cert_expiry"),
+  fitnessCertExpiry: timestamp("fitness_cert_expiry"),
+  pollutionCertUrl: text("pollution_cert_url"),
+  fitnessCertUrl: text("fitness_cert_url"),
+  complianceStatus: text("compliance_status").notNull().default("unknown"),
+  lastChecked: timestamp("last_checked").notNull().defaultNow(),
+});
+
+export const proximityAlerts = pgTable("proximity_alerts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  busId: varchar("bus_id").references(() => buses.id).notNull(),
+  alertDistance: real("alert_distance").notNull().default(1.0),
+  isActive: text("is_active").notNull().default("true"),
+  lastAlertSent: timestamp("last_alert_sent"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -63,6 +84,16 @@ export const insertAnalyticsSchema = createInsertSchema(analytics).omit({
   id: true,
 });
 
+export const insertBusComplianceSchema = createInsertSchema(busCompliance).omit({
+  id: true,
+  lastChecked: true,
+});
+
+export const insertProximityAlertSchema = createInsertSchema(proximityAlerts).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertBus = z.infer<typeof insertBusSchema>;
@@ -71,3 +102,7 @@ export type InsertRoute = z.infer<typeof insertRouteSchema>;
 export type Route = typeof routes.$inferSelect;
 export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
 export type Analytics = typeof analytics.$inferSelect;
+export type InsertBusCompliance = z.infer<typeof insertBusComplianceSchema>;
+export type BusCompliance = typeof busCompliance.$inferSelect;
+export type InsertProximityAlert = z.infer<typeof insertProximityAlertSchema>;
+export type ProximityAlert = typeof proximityAlerts.$inferSelect;
