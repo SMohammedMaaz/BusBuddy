@@ -22,7 +22,7 @@ export default function Dashboard() {
   const [, setLocation] = useLocation();
   const [activeRole, setActiveRole] = useState<"passenger" | "driver" | "admin">("passenger");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBus, setSelectedBus] = useState<BusType | null>(null);
+  const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
 
   // Get role from URL params
   useEffect(() => {
@@ -38,6 +38,9 @@ export default function Dashboard() {
     queryKey: ["/api/buses"],
     refetchInterval: 3000,
   });
+
+  // Derive selected bus from live buses array
+  const selectedBus = selectedBusId ? buses.find(b => b.id === selectedBusId) || null : null;
 
   // Fetch eco stats
   const { data: ecoStats } = useQuery<EcoStats[]>({
@@ -207,7 +210,7 @@ export default function Dashboard() {
                   <BusMap 
                     buses={buses} 
                     selectedBus={selectedBus}
-                    onBusSelect={setSelectedBus}
+                    onBusSelect={(bus) => setSelectedBusId(bus.id)}
                   />
                 </div>
               </Card>
