@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { SiGoogle } from "react-icons/si";
 import { Mail, ArrowLeft, Loader2, CheckCircle2, Eye, EyeOff, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +17,7 @@ interface AuthModalProps {
 type AuthView = "welcome" | "signin" | "signup" | "forgot-password" | "success";
 
 export function AuthModal({ open, onClose }: AuthModalProps) {
-  const { signInWithGoogle, signInWithEmail, signUpWithEmail, sendPasswordResetEmail } = useAuth();
+  const { signInWithEmail, signUpWithEmail, sendPasswordResetEmail } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<AuthView>("welcome");
@@ -73,25 +72,6 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
     return true;
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setLoading(true);
-      await signInWithGoogle();
-      setView("success");
-      setTimeout(() => {
-        onClose();
-        toast({ title: "Welcome to BusBuddy!", description: "Successfully signed in with Google" });
-      }, 1500);
-    } catch (error: any) {
-      toast({ 
-        title: "Sign in failed", 
-        description: error.message || "Please try again",
-        variant: "destructive" 
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -233,34 +213,8 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
 
             <div className="space-y-3">
               <Button
-                onClick={handleGoogleSignIn}
-                disabled={loading}
-                className="w-full h-12 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all"
-                data-testid="button-google-signin"
-              >
-                {loading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <>
-                    <SiGoogle className="mr-2 h-5 w-5" />
-                    Continue with Google
-                  </>
-                )}
-              </Button>
-
-              <div className="relative py-4">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-border" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-3 text-muted-foreground font-medium">Or</span>
-                </div>
-              </div>
-
-              <Button
                 onClick={() => setView("signin")}
-                variant="outline"
-                className="w-full h-12 border-2 hover:bg-accent"
+                className="w-full h-12"
                 data-testid="button-show-signin"
               >
                 <Mail className="mr-2 h-5 w-5" />
