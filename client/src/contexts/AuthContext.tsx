@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendPasswordResetEmail as firebaseSendPasswordResetEmail,
   onAuthStateChanged,
   RecaptchaVerifier,
   signInWithPhoneNumber,
@@ -22,6 +23,7 @@ interface AuthContextType {
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string, name: string, role: string) => Promise<void>;
   signInWithPhone: (phoneNumber: string, appVerifier: RecaptchaVerifier) => Promise<ConfirmationResult>;
+  sendPasswordResetEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -78,12 +80,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           favoriteStops: [],
         };
 
-        const createResponse = await apiRequest("/api/users", {
+        const createResponse = await fetch("/api/users", {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUserData),
         });
         
-        setUserData(createResponse as User);
+        const createdUser = await createResponse.json();
+        setUserData(createdUser as User);
       } else {
         const existingUser = await response.json();
         setUserData(existingUser);
@@ -133,6 +137,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const sendPasswordResetEmail = async (email: string) => {
+    try {
+      await firebaseSendPasswordResetEmail(auth, email);
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     await firebaseSignOut(auth);
   };
@@ -145,6 +158,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signInWithEmail,
     signUpWithEmail,
     signInWithPhone,
+    sendPasswordResetEmail,
     signOut,
   };
 
