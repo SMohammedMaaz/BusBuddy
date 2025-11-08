@@ -5,9 +5,12 @@ function getRandomOffset(max: number = 0.002): number {
 }
 
 export function startBusSimulator() {
+  let updateCount = 0;
+  
   setInterval(async () => {
     try {
       const buses = await storage.getAllBuses();
+      let activeBusesUpdated = 0;
       
       for (const bus of buses) {
         if (bus.status === "active") {
@@ -22,7 +25,13 @@ export function startBusSimulator() {
             newLng,
             Math.round(newSpeed)
           );
+          activeBusesUpdated++;
         }
+      }
+      
+      updateCount++;
+      if (updateCount % 10 === 0) {
+        console.log(`🚌 Simulator update #${updateCount}: ${activeBusesUpdated} active buses updated`);
       }
     } catch (error) {
       console.error("Bus simulation error:", error);
