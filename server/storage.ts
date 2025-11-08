@@ -6,9 +6,14 @@ import {
   type Analytics, 
   type InsertAnalytics,
   type Route,
-  type InsertRoute
+  type InsertRoute,
+  users,
+  buses,
+  routes,
+  analytics
 } from "@shared/schema";
-import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -31,171 +36,134 @@ export interface IStorage {
   updateAnalytics(id: string, data: Partial<Analytics>): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private buses: Map<string, Bus>;
-  private routes: Map<string, Route>;
-  private analytics: Map<string, Analytics>;
-
-  constructor() {
-    this.users = new Map();
-    this.buses = new Map();
-    this.routes = new Map();
-    this.analytics = new Map();
-    
-    this.seedData();
-  }
-
-  private seedData() {
-    const today = new Date();
-    const analyticsId = randomUUID();
-    this.analytics.set(analyticsId, {
-      id: analyticsId,
-      date: today,
-      totalCO2Saved: 125.6,
-      totalFuelSaved: 45.2,
-      totalTrips: 342,
-      avgBusSpeed: 32.5,
-    });
-
-    for (let i = 1; i <= 7; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const id = randomUUID();
-      this.analytics.set(id, {
-        id,
-        date,
-        totalCO2Saved: 100 + Math.random() * 50,
-        totalFuelSaved: 35 + Math.random() * 20,
-        totalTrips: 300 + Math.floor(Math.random() * 100),
-        avgBusSpeed: 28 + Math.random() * 8,
-      });
-    }
-
-    const sampleBuses = [
-      { busNumber: "94", routeName: "Green Line North", lat: 40.7580, lng: -73.9855, speed: 28 },
-      { busNumber: "42", routeName: "Blue Line East", lat: 40.7489, lng: -73.9680, speed: 32 },
-      { busNumber: "18", routeName: "Red Line South", lat: 40.7128, lng: -74.0060, speed: 25 },
-      { busNumber: "67", routeName: "Yellow Line West", lat: 40.7282, lng: -73.7949, speed: 30 },
-      { busNumber: "101", routeName: "Express Downtown", lat: 40.7614, lng: -73.9776, speed: 35 },
-    ];
-
-    sampleBuses.forEach((bus, index) => {
-      const id = randomUUID();
-      this.buses.set(id, {
-        id,
-        busNumber: bus.busNumber,
-        routeName: bus.routeName,
-        driverId: null,
-        latitude: bus.lat,
-        longitude: bus.lng,
-        status: index === 0 ? "active" : index === 3 ? "idle" : "active",
-        currentSpeed: bus.speed,
-        occupancy: 40 + Math.floor(Math.random() * 50),
-        lastUpdated: new Date(),
-      });
-    });
-  }
-
+export class DbStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
   }
 
   async getUserByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.firebaseUid === firebaseUid
-    );
+    const result = await db.select().from(users).where(eq(users.firebaseUid, firebaseUid)).limit(1);
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { 
-      ...insertUser, 
-      id,
-      createdAt: new Date(),
-    };
-    this.users.set(id, user);
-    return user;
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
   }
 
   async updateUserEcoPoints(id: string, points: number): Promise<void> {
-    const user = this.users.get(id);
-    if (user) {
-      user.ecoPoints = points;
-      this.users.set(id, user);
-    }
+    await db.update(users).set({ ecoPoints: points }).where(eq(users.id, id));
   }
 
   async getAllBuses(): Promise<Bus[]> {
-    return Array.from(this.buses.values());
+    return await db.select().from(buses);
   }
 
   async getBus(id: string): Promise<Bus | undefined> {
-    return this.buses.get(id);
+    const result = await db.select().from(buses).where(eq(buses.id, id)).limit(1);
+    return result[0];
   }
 
   async createBus(insertBus: InsertBus): Promise<Bus> {
-    const id = randomUUID();
-    const bus: Bus = { 
-      ...insertBus, 
-      id,
-      lastUpdated: new Date(),
-    };
-    this.buses.set(id, bus);
-    return bus;
+    const result = await db.insert(buses).values(insertBus).returning();
+    return result[0];
   }
 
   async updateBusLocation(id: string, latitude: number, longitude: number, speed: number): Promise<void> {
-    const bus = this.buses.get(id);
-    if (bus) {
-      bus.latitude = latitude;
-      bus.longitude = longitude;
-      bus.currentSpeed = speed;
-      bus.lastUpdated = new Date();
-      this.buses.set(id, bus);
-    }
+    await db.update(buses)
+      .set({ 
+        latitude, 
+        longitude, 
+        currentSpeed: speed,
+        lastUpdated: new Date()
+      })
+      .where(eq(buses.id, id));
   }
 
   async getAllRoutes(): Promise<Route[]> {
-    return Array.from(this.routes.values());
+    return await db.select().from(routes);
   }
 
   async getRoute(id: string): Promise<Route | undefined> {
-    return this.routes.get(id);
+    const result = await db.select().from(routes).where(eq(routes.id, id)).limit(1);
+    return result[0];
   }
 
   async createRoute(insertRoute: InsertRoute): Promise<Route> {
-    const id = randomUUID();
-    const route: Route = { ...insertRoute, id };
-    this.routes.set(id, route);
-    return route;
+    const result = await db.insert(routes).values(insertRoute).returning();
+    return result[0];
   }
 
   async getAllAnalytics(): Promise<Analytics[]> {
-    return Array.from(this.analytics.values()).sort((a, b) => 
-      a.date.getTime() - b.date.getTime()
-    );
+    return await db.select().from(analytics).orderBy(analytics.date);
   }
 
   async getLatestAnalytics(): Promise<Analytics | undefined> {
-    const all = await this.getAllAnalytics();
-    return all[all.length - 1];
+    const result = await db.select().from(analytics).orderBy(desc(analytics.date)).limit(1);
+    return result[0];
   }
 
   async createAnalytics(insertAnalytics: InsertAnalytics): Promise<Analytics> {
-    const id = randomUUID();
-    const analytics: Analytics = { ...insertAnalytics, id };
-    this.analytics.set(id, analytics);
-    return analytics;
+    const result = await db.insert(analytics).values(insertAnalytics).returning();
+    return result[0];
   }
 
   async updateAnalytics(id: string, data: Partial<Analytics>): Promise<void> {
-    const analytics = this.analytics.get(id);
-    if (analytics) {
-      Object.assign(analytics, data);
-      this.analytics.set(id, analytics);
-    }
+    await db.update(analytics).set(data).where(eq(analytics.id, id));
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DbStorage();
+
+export async function seedDatabase() {
+  const existingBuses = await storage.getAllBuses();
+  if (existingBuses.length > 0) {
+    return;
+  }
+
+  const today = new Date();
+  
+  await storage.createAnalytics({
+    date: today,
+    totalCO2Saved: 125.6,
+    totalFuelSaved: 45.2,
+    totalTrips: 342,
+    avgBusSpeed: 32.5,
+  });
+
+  for (let i = 1; i <= 7; i++) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    await storage.createAnalytics({
+      date,
+      totalCO2Saved: 100 + Math.random() * 50,
+      totalFuelSaved: 35 + Math.random() * 20,
+      totalTrips: 300 + Math.floor(Math.random() * 100),
+      avgBusSpeed: 28 + Math.random() * 8,
+    });
+  }
+
+  const sampleBuses = [
+    { busNumber: "94", routeName: "Green Line North", lat: 40.7580, lng: -73.9855, speed: 28 },
+    { busNumber: "42", routeName: "Blue Line East", lat: 40.7489, lng: -73.9680, speed: 32 },
+    { busNumber: "18", routeName: "Red Line South", lat: 40.7128, lng: -74.0060, speed: 25 },
+    { busNumber: "67", routeName: "Yellow Line West", lat: 40.7282, lng: -73.7949, speed: 30 },
+    { busNumber: "101", routeName: "Express Downtown", lat: 40.7614, lng: -73.9776, speed: 35 },
+  ];
+
+  for (const [index, bus] of sampleBuses.entries()) {
+    await storage.createBus({
+      busNumber: bus.busNumber,
+      routeName: bus.routeName,
+      driverId: null,
+      latitude: bus.lat,
+      longitude: bus.lng,
+      status: index === 0 ? "active" : index === 3 ? "idle" : "active",
+      currentSpeed: bus.speed,
+      occupancy: 40 + Math.floor(Math.random() * 50),
+    });
+  }
+
+  console.log("✅ Database seeded successfully");
+}

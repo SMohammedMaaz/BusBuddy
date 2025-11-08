@@ -25,6 +25,7 @@ interface BusMapProps {
 export function BusMap({ buses, selectedBus, onBusSelect }: BusMapProps) {
   const [mapCenter, setMapCenter] = useState(defaultCenter);
   const [eta, setEta] = useState<number | null>(null);
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
     if (selectedBus) {
@@ -36,6 +37,22 @@ export function BusMap({ buses, selectedBus, onBusSelect }: BusMapProps) {
       setEta(Math.round(calculatedEta));
     }
   }, [selectedBus]);
+
+  if (!apiKey) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-muted/20 rounded-2xl">
+        <div className="text-center p-8">
+          <h3 className="text-lg font-semibold mb-2">Google Maps API Key Required</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            To display the live bus tracking map, please add your Google Maps API key to the secrets.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Add VITE_GOOGLE_MAPS_API_KEY to your environment variables
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const busIcon = {
     path: "M12 2C11.45 2 11 2.45 11 3V4H6C4.9 4 4 4.9 4 6V18C4 19.1 4.9 20 6 20H8V21C8 21.55 8.45 22 9 22C9.55 22 10 21.55 10 21V20H14V21C14 21.55 14.45 22 15 22C15.55 22 16 21.55 16 21V20H18C19.1 20 20 19.1 20 18V6C20 4.9 19.1 4 18 4H13V3C13 2.45 12.55 2 12 2M6 8H18V15H6V8Z",

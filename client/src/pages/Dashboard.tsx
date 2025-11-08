@@ -8,10 +8,12 @@ import { EcoAnalytics } from "@/components/EcoAnalytics";
 import { RoleSwitcher } from "@/components/RoleSwitcher";
 import { DriverInterface } from "@/components/DriverInterface";
 import { AdminPanel } from "@/components/AdminPanel";
-import { LogOut, Menu, Moon, Sun } from "lucide-react";
+import { LogOut, Menu, Moon, Sun, AlertCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Bus, Analytics } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { LoadingSpinner, LoadingSkeleton } from "@/components/LoadingSpinner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
@@ -38,12 +40,12 @@ export default function Dashboard() {
     setTheme(isDark ? "dark" : "light");
   }, []);
 
-  const { data: buses = [] } = useQuery<Bus[]>({
+  const { data: buses = [], isLoading: busesLoading, error: busesError } = useQuery<Bus[]>({
     queryKey: ["/api/buses"],
     refetchInterval: 5000,
   });
 
-  const { data: analytics = [] } = useQuery<Analytics[]>({
+  const { data: analytics = [], isLoading: analyticsLoading } = useQuery<Analytics[]>({
     queryKey: ["/api/analytics"],
   });
 
@@ -108,15 +110,30 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
+        {busesError && (
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Failed to load bus data. Please refresh the page.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {activeRole === "passenger" && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <Card className="lg:col-span-2 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 overflow-hidden h-[600px]">
-                <BusMap
-                  buses={buses}
-                  selectedBus={selectedBus}
-                  onBusSelect={setSelectedBus}
-                />
+                {busesLoading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <LoadingSpinner message="Loading map..." />
+                  </div>
+                ) : (
+                  <BusMap
+                    buses={buses}
+                    selectedBus={selectedBus}
+                    onBusSelect={setSelectedBus}
+                  />
+                )}
               </Card>
 
               <div className="space-y-4">
@@ -166,7 +183,13 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <EcoAnalytics analytics={analytics} userEcoPoints={userData.ecoPoints} />
+            {analyticsLoading ? (
+              <Card className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-white/20 p-6">
+                <LoadingSkeleton />
+              </Card>
+            ) : (
+              <EcoAnalytics analytics={analytics} userEcoPoints={userData.ecoPoints} />
+            )}
           </div>
         )}
 
