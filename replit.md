@@ -12,15 +12,32 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
-**November 8, 2025**
+**November 8, 2025 - Light Aesthetic Theme Overhaul**
+- **Complete Design Transformation**: Pivoted from dark "Deep Navy" theme to light aesthetic eco theme based on user feedback about poor text visibility
+- **New Color Palette**: 
+  - Background: Soft mint white (#FBFCFD) with mint tint
+  - Primary: Fresh eco green (#1DB954)
+  - Secondary: Clear sky blue (#0FA0CE)
+  - Accent: Warm energy yellow (#FFB300)
+  - Text: Dark readable (#1A2F3A) for excellent contrast
+- **CSS Utilities Updated**: Redesigned all custom classes for light theme:
+  - `.gradient-text`, `.glass-card`, `.animated-gradient-bg` now use light colors
+  - `.hero-gradient` uses soft mint/teal gradients
+  - `.glass-nav-light` for glassmorphism navbar
+  - `.eco-glow-light`, `.sky-glow-light` for subtle light theme glows
+  - `.bus-marker-light` for animated bus markers
+- **Shadow System**: Completely rebuilt shadows for light theme with realistic, subtle depth
+- **Typography System**: Added Poppins (headings), Nunito (subheadings), Inter (body) fonts with utility classes
+- **Landing Page**: Added Login/Logout/Sign In buttons in navbar
+- **Dark Mode**: Configured to use same light theme for consistency (always light mode)
+  
+**Previous Updates (November 8, 2025)**
 - Fixed color palette: Corrected Lime color to exact HSL values (96 100% 68%) matching #B2FF59
 - Fixed Google Maps center: Changed from New York to Karnataka coordinates (12.6337, 77.1175)
 - Integrated BusMap component in Passenger dashboard with proper props and state management
 - Integrated DriverInterface component for Driver dashboard with bus number, route, and next stops
 - Integrated AdminPanel component for Admin dashboard with buses, analytics, and user statistics
-- Added glassmorphism enhancements throughout the application
 - Verified all three role-based dashboards (Passenger, Driver, Admin) are functioning correctly
-- All components now properly imported and wired with correct TypeScript types
 
 ## System Architecture
 
@@ -44,10 +61,16 @@ Preferred communication style: Simple, everyday language.
 
 **Design Philosophy**
 - Sustainability-focused "Green Intelligence: AI for a Sustainable Planet" theme
-- **Color Palette**: Electric Blue (#0066FF), Eco Green (#00A896), Lime (#B2FF59), Deep Navy (#0B132B)
-- Enhanced glassmorphism effects with backdrop blur, floating cards, and animated gradients
-- Reference-based design inspired by Notion's clean layouts and Apple's minimalism
-- Animated eco-themed UI with glowing effects and pulsing elements
+- **Light Aesthetic Color Palette**: 
+  - Primary: Fresh eco green (#1DB954)
+  - Secondary: Clear sky blue (#0FA0CE)
+  - Accent: Warm energy yellow (#FFB300)
+  - Background: Soft mint white (#FBFCFD)
+  - Text: Dark readable (#1A2F3A)
+- Light glassmorphism effects with backdrop blur, floating cards, and soft gradients
+- Professional design with excellent text contrast and readability
+- Animated eco-themed UI with subtle glows and smooth transitions
+- Typography: Poppins (headings), Nunito (subheadings), Inter (body)
 
 ### Backend Architecture
 

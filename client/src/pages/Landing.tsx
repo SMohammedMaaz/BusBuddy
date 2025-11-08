@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { 
   Bus, MapPin, Zap, Leaf, Shield, MessageCircle, 
-  TrendingUp, Users, Clock, Navigation, AlertCircle, FileCheck 
+  TrendingUp, Users, Clock, Navigation, AlertCircle, FileCheck,
+  LogIn, UserPlus
 } from "lucide-react";
 
 const fadeInUp = {
@@ -29,38 +30,38 @@ export default function Landing() {
       {/* Hero Overlay for Readability */}
       <div className="fixed inset-0 hero-overlay" />
       
-      {/* Animated Floating Icons */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+      {/* Animated Floating Icons - Subtle for Light Theme */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-10">
         <motion.div
           className="absolute top-20 left-10 floating"
           style={{ animationDelay: "0s" }}
         >
-          <Bus className="w-16 h-16 text-white" />
+          <Bus className="w-16 h-16 text-primary" />
         </motion.div>
         <motion.div
           className="absolute top-40 right-20 floating"
           style={{ animationDelay: "1s" }}
         >
-          <Leaf className="w-20 h-20 text-white" />
+          <Leaf className="w-20 h-20 text-primary" />
         </motion.div>
         <motion.div
           className="absolute bottom-40 left-20 floating"
           style={{ animationDelay: "2s" }}
         >
-          <MapPin className="w-14 h-14 text-white" />
+          <MapPin className="w-14 h-14 text-secondary" />
         </motion.div>
         <motion.div
           className="absolute bottom-20 right-40 floating"
           style={{ animationDelay: "1.5s" }}
         >
-          <Navigation className="w-12 h-12 text-white" />
+          <Navigation className="w-12 h-12 text-secondary" />
         </motion.div>
       </div>
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header - Glassmorphism Navbar */}
-        <header className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10">
+        {/* Header - Light Glassmorphism Navbar */}
+        <header className="fixed top-0 left-0 right-0 z-50 glass-nav-light">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <motion.div 
               className="flex items-center gap-3"
@@ -69,17 +70,17 @@ export default function Landing() {
               transition={{ duration: 0.6 }}
             >
               <motion.div 
-                className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00E676] to-[#00B0FF] flex items-center justify-center shadow-lg"
+                className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg eco-glow-light"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Bus className="w-7 h-7 text-white" />
               </motion.div>
               <div>
-                <h1 className="text-2xl heading-poppins logo-gradient">
+                <h1 className="text-2xl heading-poppins logo-gradient-light">
                   BusBuddy
                 </h1>
-                <p className="text-xs text-white/80 italic">Greener Karnataka</p>
+                <p className="text-xs text-muted-foreground italic font-medium">Greener Karnataka</p>
               </div>
             </motion.div>
             <motion.div 
@@ -89,11 +90,21 @@ export default function Landing() {
               transition={{ duration: 0.6 }}
             >
               <Button
+                variant="ghost"
                 onClick={() => setLocation("/dashboard")}
-                className="glow-button pulse-glow"
-                data-testid="button-get-started"
+                data-testid="button-login"
+                className="text-foreground font-semibold"
               >
-                Get Started
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+              <Button
+                onClick={() => setLocation("/dashboard")}
+                className="bg-gradient-to-r from-primary to-secondary text-white font-semibold"
+                data-testid="button-sign-up"
+              >
+                <UserPlus className="w-4 h-4 mr-2" />
+                Sign Up
               </Button>
             </motion.div>
           </div>
@@ -108,8 +119,8 @@ export default function Landing() {
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                <span className="px-6 py-3 rounded-full glass-card-bright text-sm font-medium text-white border border-white/30 inline-flex items-center gap-2 subheading-nunito">
-                  <Leaf className="w-4 h-4" />
+                <span className="px-6 py-3 rounded-full glass-card-light text-sm font-medium text-foreground border border-primary/20 inline-flex items-center gap-2 subheading-nunito">
+                  <Leaf className="w-4 h-4 text-primary" />
                   Green Intelligence: AI for a Sustainable Planet
                 </span>
               </motion.div>
@@ -117,7 +128,7 @@ export default function Landing() {
               {/* Hero Text with Max Width Container */}
               <div className="max-w-4xl mx-auto text-center px-4">
                 <motion.h2 
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl heading-poppins mb-8 text-white neon-text leading-tight"
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl heading-poppins mb-8 text-foreground text-shadow-subtle leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
@@ -134,10 +145,10 @@ export default function Landing() {
             <motion.p 
               {...fadeInUp}
               transition={{ delay: 0.2, duration: 0.7 }}
-              className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed body-inter"
+              className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed body-inter"
               style={{ fontSize: '1.3rem' }}
             >
-              AI-powered bus tracking for <span className="gradient-text">Mysuru</span> and <span className="gradient-text">Bengaluru</span>. 
+              AI-powered bus tracking for <span className="gradient-text font-bold">Mysuru</span> and <span className="gradient-text font-bold">Bengaluru</span>. 
               Real-time ETA predictions, eco-routing, SOS emergency support, and smart notifications for sustainable urban transport.
             </motion.p>
             
@@ -155,7 +166,7 @@ export default function Landing() {
                 <Button
                   size="lg"
                   onClick={() => setLocation("/dashboard")}
-                  className="glow-button pulse-glow text-lg px-12 py-6 h-auto"
+                  className="bg-gradient-to-r from-primary to-secondary text-white text-lg px-12 py-6 h-auto shadow-lg eco-glow-light font-semibold"
                   data-testid="button-hero-get-started"
                 >
                   Get Started
@@ -172,42 +183,42 @@ export default function Landing() {
               animate="animate"
             >
               <motion.div variants={fadeInUp}>
-                <Card className="p-8 glass-card-bright hover:shadow-2xl transition-all duration-300 border-white/20 floating">
+                <Card className="p-8 glass-card-light hover:shadow-2xl transition-all duration-300 border-primary/10 floating">
                   <motion.div 
-                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00E676] to-[#00B0FF] flex items-center justify-center mb-6 mx-auto shadow-lg"
+                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-6 mx-auto shadow-lg eco-glow-light"
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
                     <TrendingUp className="w-10 h-10 text-white" />
                   </motion.div>
-                  <h3 className="font-bold text-3xl mb-2 co2-counter text-white heading-poppins">13+ tons</h3>
-                  <p className="text-white/80 font-medium body-inter">CO₂ Saved Monthly</p>
+                  <h3 className="font-bold text-3xl mb-2 co2-counter text-foreground heading-poppins">13+ tons</h3>
+                  <p className="text-muted-foreground font-medium body-inter">CO₂ Saved Monthly</p>
                 </Card>
               </motion.div>
 
               <motion.div variants={fadeInUp}>
-                <Card className="p-8 glass-card-bright hover:shadow-2xl transition-all duration-300 border-white/20 floating" style={{ animationDelay: "0.5s" }}>
+                <Card className="p-8 glass-card-light hover:shadow-2xl transition-all duration-300 border-secondary/10 floating" style={{ animationDelay: "0.5s" }}>
                   <motion.div 
-                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00B0FF] to-[#00E676] flex items-center justify-center mb-6 mx-auto shadow-lg bus-marker"
+                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center mb-6 mx-auto shadow-lg bus-marker-light sky-glow-light"
                   >
                     <Bus className="w-10 h-10 text-white" />
                   </motion.div>
-                  <h3 className="font-bold text-3xl mb-2 co2-counter text-white heading-poppins">500+</h3>
-                  <p className="text-white/80 font-medium body-inter">Active Buses Tracked</p>
+                  <h3 className="font-bold text-3xl mb-2 co2-counter text-foreground heading-poppins">500+</h3>
+                  <p className="text-muted-foreground font-medium body-inter">Active Buses Tracked</p>
                 </Card>
               </motion.div>
 
               <motion.div variants={fadeInUp}>
-                <Card className="p-8 glass-card-bright hover:shadow-2xl transition-all duration-300 border-white/20 floating" style={{ animationDelay: "1s" }}>
+                <Card className="p-8 glass-card-light hover:shadow-2xl transition-all duration-300 border-accent/10 floating" style={{ animationDelay: "1s" }}>
                   <motion.div 
-                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FFD54F] to-[#00E676] flex items-center justify-center mb-6 mx-auto shadow-lg"
+                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mb-6 mx-auto shadow-lg"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
                     <Users className="w-10 h-10 text-white" />
                   </motion.div>
-                  <h3 className="font-bold text-3xl mb-2 co2-counter text-white heading-poppins">5,000L</h3>
-                  <p className="text-white/80 font-medium body-inter">Diesel Saved Monthly</p>
+                  <h3 className="font-bold text-3xl mb-2 co2-counter text-foreground heading-poppins">5,000L</h3>
+                  <p className="text-muted-foreground font-medium body-inter">Diesel Saved Monthly</p>
                 </Card>
               </motion.div>
             </motion.div>
@@ -216,7 +227,7 @@ export default function Landing() {
 
         {/* Features Section */}
         <section className="py-24 px-4 sm:px-6 relative">
-          <div className="absolute inset-0 bg-background/50 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-muted/30 backdrop-blur-sm" />
           <div className="relative z-10 max-w-7xl mx-auto">
             <motion.div
               className="text-center mb-16"
@@ -225,10 +236,10 @@ export default function Landing() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <h2 className="text-4xl md:text-5xl heading-poppins mb-4 text-white neon-text">
+              <h2 className="text-4xl md:text-5xl heading-poppins mb-4 text-foreground text-shadow-subtle">
                 Intelligent Features for a <span className="gradient-text">Greener Future</span>
               </h2>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto subheading-nunito">
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto subheading-nunito">
                 Comprehensive ecosystem for passengers, drivers, and administrators
               </p>
             </motion.div>
@@ -285,12 +296,12 @@ export default function Landing() {
                 }
               ].map((feature, index) => (
                 <motion.div key={index} variants={fadeInUp}>
-                  <Card className="p-6 glass-card-bright hover:shadow-2xl transition-all duration-300 border-white/20 h-full">
+                  <Card className="p-6 glass-card-light hover:shadow-2xl transition-all duration-300 border-primary/10 h-full">
                     <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 shadow-lg`}>
                       <feature.icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="font-bold text-xl mb-2 text-white subheading-nunito">{feature.title}</h3>
-                    <p className="text-white/80 body-inter">{feature.description}</p>
+                    <h3 className="font-bold text-xl mb-2 text-foreground subheading-nunito">{feature.title}</h3>
+                    <p className="text-muted-foreground body-inter">{feature.description}</p>
                   </Card>
                 </motion.div>
               ))}
@@ -344,14 +355,14 @@ export default function Landing() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2, duration: 0.7 }}
                 >
-                  <Card className="p-8 glass-card hover:glass-strong transition-all duration-300 border-primary/10 h-full flex flex-col">
-                    <div className={`w-20 h-20 rounded-2xl bg-${dashboard.color} flex items-center justify-center mb-6 mx-auto`}>
+                  <Card className="p-8 glass-card-light hover:shadow-2xl transition-all duration-300 border-primary/10 h-full flex flex-col">
+                    <div className={`w-20 h-20 rounded-2xl bg-${dashboard.color} flex items-center justify-center mb-6 mx-auto shadow-lg`}>
                       <dashboard.icon className="w-10 h-10 text-white" />
                     </div>
-                    <h3 className="font-bold text-2xl mb-4 text-center eco-gradient-text">{dashboard.role}</h3>
+                    <h3 className="font-bold text-2xl mb-4 text-center gradient-text heading-poppins">{dashboard.role}</h3>
                     <ul className="space-y-3 mb-8 flex-grow">
                       {dashboard.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                        <li key={i} className="flex items-start gap-2 text-muted-foreground body-inter">
                           <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                           <span>{feature}</span>
                         </li>
@@ -359,7 +370,7 @@ export default function Landing() {
                     </ul>
                     <Button
                       onClick={dashboard.action}
-                      className="w-full bg-gradient-to-r from-primary to-secondary text-white"
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold"
                       data-testid={`button-${dashboard.role.toLowerCase()}-dashboard`}
                     >
                       Open {dashboard.role} Dashboard
