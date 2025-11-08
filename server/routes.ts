@@ -55,34 +55,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/users/:firebaseUid", async (req, res) => {
+  // Authentication routes
+  app.post("/api/auth/register", async (req, res) => {
     try {
-      const user = await storage.getUserByFirebaseUid(req.params.firebaseUid);
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
+      const { email, password, name, role } = req.body;
+      
+      if (!email || !password || !name) {
+        return res.status(400).json({ error: "Email, password, and name are required" });
       }
-      res.json(user);
+
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ error: "User already exists" });
+      }
+
+      const bcrypt = await import("bcryptjs");
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const user = await storage.createUser({
+        email,
+        password: hashedPassword,
+        name,
+        role: role || "passenger",
+      });
+
+      // Return user without password
+      const { password: _, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
     } catch (error) {
-      res.status(500).json({ error: "Failed to fetch user" });
+      console.error("Registration error:", error);
+      res.status(500).json({ error: "Failed to register user" });
     }
   });
 
-  app.post("/api/users", async (req, res) => {
+  app.post("/api/auth/login", async (req, res) => {
     try {
-      const validatedData = insertUserSchema.parse(req.body);
-      const existingUser = await storage.getUserByFirebaseUid(validatedData.firebaseUid);
+      const { email, password } = req.body;
       
-      if (existingUser) {
-        return res.json(existingUser);
+      if (!email || !password) {
+        return res.status(400).json({ error: "Email and password are required" });
       }
 
-      const user = await storage.createUser(validatedData);
-      res.status(201).json(user);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: error.errors });
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(401).json({ error: "Invalid credentials" });
       }
-      res.status(500).json({ error: "Failed to create user" });
+
+      const bcrypt = await import("bcryptjs");
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      
+      if (!isValidPassword) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Return user without password
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ error: "Failed to login" });
+    }
+  });
+
+  app.post("/api/auth/logout", async (_req, res) => {
+    res.json({ message: "Logged out successfully" });
+  });
+
+  app.get("/api/users/:id", async (req, res) => {
+    try {
+      const user = await storage.getUser(req.params.id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      // Return user without password
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch user" });
     }
   });
 

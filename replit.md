@@ -12,6 +12,26 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**November 8, 2025 - Firebase Removed & Backend Authentication Implemented**
+- **Authentication System Rewrite**: Completely removed Firebase, implemented backend email/password authentication
+  - Removed `firebaseUid` field from users table schema
+  - Added `password` field with bcryptjs hashing (10 salt rounds)
+  - Made email field unique at database level
+  - Created `/api/auth/register` endpoint for user registration
+  - Created `/api/auth/login` endpoint with secure password validation
+  - Created `/api/auth/logout` endpoint for session cleanup
+  - Updated storage interface: replaced `getUserByFirebaseUid()` with `getUserByEmail()`
+  - Rewrote AuthContext to use backend API instead of Firebase SDK
+  - Implemented localStorage-based session persistence
+  - Added response validation to prevent failed auth creating sessions
+  - Password field excluded from all API responses
+  - Removed Firebase configuration files and dependencies
+- **Security Features**:
+  - Passwords hashed with bcryptjs before storage
+  - Email uniqueness enforced at database level
+  - Failed authentication properly throws errors
+  - User data stored in localStorage for session persistence
+
 **November 8, 2025 - Animated Bus Markers & Real-Time ETA System**
 - **Animated Bus Markers**: Smooth animations with bounce effects
   - Created AnimatedBusMarker component using requestAnimationFrame

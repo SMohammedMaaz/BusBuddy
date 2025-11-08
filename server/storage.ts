@@ -23,7 +23,7 @@ import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
-  getUserByFirebaseUid(firebaseUid: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserEcoPoints(id: string, points: number): Promise<void>;
   
@@ -59,8 +59,8 @@ export class DbStorage implements IStorage {
     return result[0];
   }
 
-  async getUserByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.firebaseUid, firebaseUid)).limit(1);
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
     return result[0];
   }
 

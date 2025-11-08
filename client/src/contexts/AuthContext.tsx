@@ -1,13 +1,12 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { User } from "@shared/schema";
 
 interface AuthContextType {
-  currentUser: { uid: string; email: string | null } | null;
-  userData: User | null;
+  currentUser: User | null;
   loading: boolean;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string, name: string, role: string) => Promise<void>;
-  sendPasswordResetEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -22,48 +21,81 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<{ uid: string; email: string | null } | null>({ uid: "guest", email: "guest@busbuddy.com" });
-  const [userData, setUserData] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const mockUser: User = {
-      id: "guest",
-      firebaseUid: "guest",
-      email: "guest@busbuddy.com",
-      name: "Guest User",
-      phone: null,
-      role: "passenger",
-      ecoPoints: 0,
-      favoriteStops: [],
-      createdAt: new Date(),
-    };
-    setUserData(mockUser);
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
+      try {
+        setCurrentUser(JSON.parse(storedUser));
+      } catch (e) {
+        localStorage.removeItem("currentUser");
+      }
+    }
+    setLoading(false);
   }, []);
 
   const signInWithEmail = async (email: string, password: string) => {
-    return Promise.resolve();
+    try {
+      setLoading(true);
+      const response = await apiRequest("POST", "/api/auth/login", { email, password });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Login failed");
+      }
+      
+      const user = (await response.json()) as User;
+      setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(user));
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signUpWithEmail = async (email: string, password: string, name: string, role: string) => {
-    return Promise.resolve();
-  };
-
-  const sendPasswordResetEmail = async (email: string) => {
-    return Promise.resolve();
+    try {
+      setLoading(true);
+      const response = await apiRequest("POST", "/api/auth/register", { email, password, name, role });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Registration failed");
+      }
+      
+      const user = (await response.json()) as User;
+      setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(user));
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signOut = async () => {
-    return Promise.resolve();
+    try {
+      await apiRequest("POST", "/api/auth/logout");
+      
+      setCurrentUser(null);
+      localStorage.removeItem("currentUser");
+      queryClient.clear();
+    } catch (error) {
+      console.error("Logout error:", error);
+      throw error;
+    }
   };
 
   const value = {
     currentUser,
-    userData,
     loading,
     signInWithEmail,
     signUpWithEmail,
-    sendPasswordResetEmail,
     signOut,
   };
 
