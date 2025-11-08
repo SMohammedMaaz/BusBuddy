@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Bell, BellOff } from "lucide-react";
+import { Bell, BellOff, BellRing } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Bus } from "@shared/schema";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 interface BusNotificationsProps {
   userLocation?: { lat: number; lng: number };
@@ -11,6 +13,8 @@ interface BusNotificationsProps {
 }
 
 export function BusNotifications({ userLocation, maxDistance = 5 }: BusNotificationsProps) {
+  const { toast } = useToast();
+  const [notifiedBuses, setNotifiedBuses] = useState<Set<string>>(new Set());
   const { data: buses = [] } = useQuery<Bus[]>({
     queryKey: ["/api/buses"],
     refetchInterval: 3000,
@@ -22,6 +26,24 @@ export function BusNotifications({ userLocation, maxDistance = 5 }: BusNotificat
     .slice(0, 3); // Show top 3 for demo
 
   const totalActive = buses.filter(bus => bus.status === "active").length;
+
+  const handleNotifyClick = (bus: Bus) => {
+    setNotifiedBuses(prev => new Set(prev).add(bus.id));
+    
+    toast({
+      title: "Notification Enabled",
+      description: (
+        <div className="flex flex-col gap-2">
+          <p className="font-semibold">Bus {bus.busNumber} - {bus.routeName}</p>
+          <p className="text-sm">You'll be notified when this bus is approaching your location.</p>
+          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+            <BellRing className="w-4 h-4" />
+            <span>Current speed: {Math.round(bus.currentSpeed)} km/h</span>
+          </div>
+        </div>
+      ),
+    });
+  };
 
   return (
     <Card className="glass-card-light border-primary/10" data-testid="card-bus-notifications">
@@ -71,11 +93,20 @@ export function BusNotifications({ userLocation, maxDistance = 5 }: BusNotificat
                   </div>
                   <Button
                     size="sm"
-                    variant="outline"
+                    variant={notifiedBuses.has(bus.id) ? "default" : "outline"}
                     className="flex-shrink-0"
+                    onClick={() => handleNotifyClick(bus)}
+                    disabled={notifiedBuses.has(bus.id)}
                     data-testid={`button-notify-${bus.busNumber}`}
                   >
-                    Notify
+                    {notifiedBuses.has(bus.id) ? (
+                      <>
+                        <BellRing className="w-4 h-4 mr-1" />
+                        Notified
+                      </>
+                    ) : (
+                      "Notify"
+                    )}
                   </Button>
                 </div>
               </CardContent>
