@@ -1,0 +1,111 @@
+background: linear-gradient(90deg, #00E676, #00B0FF);
+color: #FFFFFF;
+border: none;
+border-radius: 50px;
+padding: 0.8rem 2rem;
+font-weight: 600;
+box-shadow: 0px 4px 20px rgba(0, 224, 163, 0.4);
+transition: all 0.3s ease;
+
+- Hover effect:
+
+
+transform: scale(1.05);
+box-shadow: 0px 6px 25px rgba(0, 224, 163, 0.6);
+
+
+Add a soft glowing pulse behind the button using CSS keyframes.
+
+---
+
+### 🌿 COLOR PALETTE (UPDATED)
+Use this **brighter eco-futuristic palette** that fits “Green Intelligence”:
+
+| Element | Color | Description |
+|----------|--------|-------------|
+| Primary | `#00E676` | Eco green accent |
+| Secondary | `#00B0FF` | Clean sky blue |
+| Accent | `#FFD54F` | Soft energy yellow |
+| Text Primary | `#FFFFFF` | Bright and clean |
+| Text Secondary | `#F1F5F9` | Muted white-grey |
+| Background | `#001F33` | Deep teal base |
+| Card | `rgba(255,255,255,0.1)` | Glassmorphic panels |
+| Shadow | `0 4px 20px rgba(0,0,0,0.25)` |
+
+---
+
+### 🧩 NAVBAR IMPROVEMENT
+- Use a glassmorphism effect:
+
+
+background: rgba(255, 255, 255, 0.08);
+backdrop-filter: blur(10px);
+
+- Text and buttons should be **white** or **gradient blue-green**
+- Active tab (Passenger / Driver / Admin) → glowing underline
+- Hover effect: fade-in color with glow
+- Logo text “BusBuddy” → gradient from `#00E676` to `#00B0FF`
+- Tagline “Greener Karnataka” → soft white text, italic
+
+---
+
+### 🌇 BACKGROUND VISUALS
+Add subtle **floating animations** to make the hero section dynamic:
+- Floating eco icons (bus, leaf, map pin)
+- Use Framer Motion for smooth movement:
+- Slight vertical motion (2–3px up and down)
+- Slow fade-in of elements
+
+Add Lottie animation (optional) for moving buses or glowing route paths in the background:
+- Use any eco-bus animation from [https://lottiefiles.com](https://lottiefiles.com)
+- Set opacity: 0.2
+- Position: absolute bottom-right
+
+---
+
+### 💬 TEXT LAYOUT
+Ensure the hero text area has:
+
+
+max-width: 900px;
+margin: auto;
+text-align: center;
+padding: 4rem 1rem;
+
+
+---
+
+### 🪄 PAGE TRANSITIONS
+- Use **Framer Motion** for fade-in and slide-up on page load.
+- Components should subtly animate in sequence (hero → features → footer).
+- Smooth hover transitions everywhere (0.25–0.3s ease).
+
+---
+
+### 🧠 OVERALL GOAL
+Make the BusBuddy homepage:
+✅ Clean & futuristic  
+✅ Readable in all devices  
+✅ Visually glowing with eco-tech vibes  
+✅ Buttons and headings pop out  
+✅ Hero text visible even on gradient backgrounds  
+✅ Typography strong, professional, and friendly  
+✅ Align perfectly with theme “Green Intelligence: AI for a Sustainable Planet”
+
+---
+
+Apply these updates globally across the landing page and hero section of the BusBuddy app.
+
+✨ Result After Pasting This Prompt:
+
+Background → Bright eco gradient (green-blue glow)
+
+Fonts → Clean, high-contrast, readable from far
+
+Buttons → Floating glowing “Get Started”
+
+Driver Login → Removed (for minimal, professional look)
+
+Text → White + gradient blue-green highlights
+
+Page → Feels modern, premium, and hackathon-ready

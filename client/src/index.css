@@ -1,16 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* BusBuddy Theme Colors */
+/* BusBuddy Theme Colors - Brighter Eco-Futuristic */
 :root {
-  /* Electric Blue #0066FF, Eco Green #00A896, Lime #B2FF59, Deep Navy #0B132B */
+  /* Updated Brighter Palette for Green Intelligence */
+  --eco-primary: 158 100% 58%;        /* #00E676 - Eco green accent */
+  --sky-secondary: 198 100% 50%;      /* #00B0FF - Clean sky blue */
+  --energy-accent: 45 100% 64%;       /* #FFD54F - Soft energy yellow */
+  --text-primary: 0 0% 100%;          /* #FFFFFF - Bright clean white */
+  --text-secondary: 210 20% 96%;      /* #F1F5F9 - Muted white-grey */
+  --deep-teal: 200 100% 10%;          /* #001F33 - Deep teal base */
+  
+  /* Legacy colors for compatibility */
   --electric-blue: 216 100% 50%;
-  --eco-green: 175 100% 33%;
+  --eco-green: 158 100% 58%;          /* Updated to match #00E676 */
   --lime: 96 100% 68%;
-  --deep-navy: 219 62% 10%;
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --white-text: 210 40% 98%;
+  --deep-navy: 200 100% 10%;          /* Updated to match #001F33 */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --white-text: 0 0% 100%;
   
   --button-outline: rgba(0,102,255, .30);
   --badge-outline: rgba(0,168,150, .25);
@@ -459,5 +469,137 @@
 
   .dark .float-on-hover:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* New Brighter Eco-Futuristic Styles */
+  
+  /* Gradient text effect for accent words */
+  .gradient-text {
+    background: linear-gradient(90deg, #00FFB9, #1E90FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  /* Hero gradient background */
+  .hero-gradient {
+    background: linear-gradient(135deg, #00E1A3 0%, #00B3FF 100%);
+    position: relative;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25));
+  }
+
+  /* Neon text shadow for headings */
+  .neon-text {
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  }
+
+  /* Glowing button styles */
+  .glow-button {
+    background: linear-gradient(90deg, #00E676, #00B0FF);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    box-shadow: 0px 4px 20px rgba(0, 224, 163, 0.4);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .glow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 25px rgba(0, 224, 163, 0.6);
+  }
+
+  /* Button pulse animation */
+  @keyframes buttonPulse {
+    0%, 100% {
+      box-shadow: 0px 4px 20px rgba(0, 224, 163, 0.4);
+    }
+    50% {
+      box-shadow: 0px 4px 30px rgba(0, 224, 163, 0.7);
+    }
+  }
+
+  .pulse-glow {
+    animation: buttonPulse 2s ease-in-out infinite;
+  }
+
+  /* Glassmorphism navbar */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Logo gradient */
+  .logo-gradient {
+    background: linear-gradient(90deg, #00E676, #00B0FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Floating animation for icons */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .floating {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Card glassmorphism with brighter theme */
+  .glass-card-bright {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Typography improvements */
+  .heading-poppins {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .subheading-nunito {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .body-inter {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  /* Glowing underline for active nav items */
+  .nav-glow {
+    position: relative;
+  }
+
+  .nav-glow::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00E676, #00B0FF);
+    box-shadow: 0 0 8px rgba(0, 230, 118, 0.6);
+    border-radius: 2px;
   }
 }
