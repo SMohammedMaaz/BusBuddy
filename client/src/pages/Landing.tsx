@@ -91,7 +91,7 @@ export default function Landing() {
             >
               <Button
                 variant="ghost"
-                onClick={() => setLocation("/dashboard")}
+                onClick={() => setLocation("/login")}
                 data-testid="button-login"
                 className="text-foreground font-semibold"
               >
@@ -99,7 +99,7 @@ export default function Landing() {
                 Login
               </Button>
               <Button
-                onClick={() => setLocation("/dashboard")}
+                onClick={() => setLocation("/signup")}
                 className="bg-gradient-to-r from-primary to-secondary text-white font-semibold"
                 data-testid="button-sign-up"
               >
