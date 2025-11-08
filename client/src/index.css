@@ -4,75 +4,81 @@
 @tailwind components;
 @tailwind utilities;
 
-/* BusBuddy Theme Colors - Brighter Eco-Futuristic */
+/* BusBuddy Theme Colors - Light Aesthetic Eco Theme */
 :root {
-  /* Updated Brighter Palette for Green Intelligence */
-  --eco-primary: 158 100% 58%;        /* #00E676 - Eco green accent */
-  --sky-secondary: 198 100% 50%;      /* #00B0FF - Clean sky blue */
-  --energy-accent: 45 100% 64%;       /* #FFD54F - Soft energy yellow */
-  --text-primary: 0 0% 100%;          /* #FFFFFF - Bright clean white */
-  --text-secondary: 210 20% 96%;      /* #F1F5F9 - Muted white-grey */
-  --deep-teal: 200 100% 10%;          /* #001F33 - Deep teal base */
+  /* Fresh Light Palette - Perfect Readability */
+  --eco-primary: 158 65% 45%;         /* #1DB954 - Fresh eco green */
+  --sky-secondary: 198 85% 48%;       /* #0FA0CE - Clear sky blue */
+  --energy-accent: 45 100% 55%;       /* #FFB300 - Warm energy yellow */
+  --soft-mint: 160 40% 92%;           /* #E8F5F1 - Soft mint background */
+  --light-teal: 168 50% 88%;          /* #C8E6E0 - Light teal accent */
+  --dark-text: 200 30% 15%;           /* #1A2F3A - Dark readable text */
+  --medium-text: 200 20% 35%;         /* #4A5F6F - Medium text */
   
-  /* Legacy colors for compatibility */
-  --electric-blue: 216 100% 50%;
-  --eco-green: 158 100% 58%;          /* Updated to match #00E676 */
-  --lime: 96 100% 68%;
-  --deep-navy: 200 100% 10%;          /* Updated to match #001F33 */
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --white-text: 0 0% 100%;
-  
-  --button-outline: rgba(0,102,255, .30);
-  --badge-outline: rgba(0,168,150, .25);
+  /* Design System Colors */
+  --button-outline: rgba(29, 185, 84, 0.3);
+  --badge-outline: rgba(15, 160, 206, 0.25);
   --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,102,255, .05);
-  --elevate-2: rgba(0,168,150, .10);
-  --background: 219 62% 10%;
-  --foreground: 210 40% 98%;
-  --border: 216 40% 25%;
-  --card: 219 60% 12%;
-  --card-foreground: 210 40% 98%;
-  --card-border: 216 50% 20%;
-  --sidebar: 219 62% 11%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 216 50% 18%;
-  --sidebar-primary: 216 100% 50%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 175 100% 33%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 216 100% 50%;
-  --popover: 219 60% 13%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 216 50% 20%;
-  --primary: 216 100% 50%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 175 100% 33%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 216 30% 20%;
-  --muted-foreground: 210 20% 70%;
-  --accent: 96 100% 68%;
-  --accent-foreground: 219 62% 10%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --input: 216 40% 25%;
-  --ring: 216 100% 50%;
-  --chart-1: 216 100% 50%;
-  --chart-2: 175 100% 33%;
-  --chart-3: 79 100% 67%;
-  --chart-4: 195 100% 45%;
-  --chart-5: 260 80% 60%;
+  --elevate-1: rgba(29, 185, 84, 0.08);
+  --elevate-2: rgba(15, 160, 206, 0.12);
+  
+  /* Light Theme Base */
+  --background: 160 40% 98%;          /* #FBFCFD - Almost white with mint tint */
+  --foreground: 200 30% 15%;          /* #1A2F3A - Dark text */
+  --border: 168 25% 85%;              /* #D4E4E0 - Soft border */
+  --card: 0 0% 100%;                  /* #FFFFFF - Pure white cards */
+  --card-foreground: 200 30% 15%;     /* #1A2F3A - Dark text on cards */
+  --card-border: 168 25% 90%;         /* #E5EDE8 - Very soft card border */
+  
+  /* Sidebar Light Theme */
+  --sidebar: 160 35% 96%;             /* #F5FAF8 - Light mint sidebar */
+  --sidebar-foreground: 200 30% 15%;  /* #1A2F3A - Dark text */
+  --sidebar-border: 168 25% 88%;      /* #DFE8E4 - Soft sidebar border */
+  --sidebar-primary: 158 65% 45%;     /* #1DB954 - Eco green */
+  --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - White text */
+  --sidebar-accent: 198 85% 48%;      /* #0FA0CE - Sky blue */
+  --sidebar-accent-foreground: 0 0% 100%; /* #FFFFFF - White text */
+  --sidebar-ring: 158 65% 45%;        /* #1DB954 - Eco green ring */
+  
+  /* Interactive Elements */
+  --popover: 0 0% 100%;               /* #FFFFFF - White popover */
+  --popover-foreground: 200 30% 15%;  /* #1A2F3A - Dark text */
+  --popover-border: 168 25% 90%;      /* #E5EDE8 - Soft border */
+  --primary: 158 65% 45%;             /* #1DB954 - Eco green */
+  --primary-foreground: 0 0% 100%;    /* #FFFFFF - White text */
+  --secondary: 198 85% 48%;           /* #0FA0CE - Sky blue */
+  --secondary-foreground: 0 0% 100%;  /* #FFFFFF - White text */
+  --muted: 168 30% 94%;               /* #EDF4F1 - Muted background */
+  --muted-foreground: 200 20% 40%;    /* #596E7A - Muted text */
+  --accent: 45 100% 55%;              /* #FFB300 - Energy yellow */
+  --accent-foreground: 200 30% 15%;   /* #1A2F3A - Dark text on accent */
+  --destructive: 0 70% 50%;           /* #E63946 - Alert red */
+  --destructive-foreground: 0 0% 100%; /* #FFFFFF - White text */
+  --input: 168 25% 90%;               /* #E5EDE8 - Input background */
+  --ring: 158 65% 45%;                /* #1DB954 - Focus ring */
+  
+  /* Charts */
+  --chart-1: 158 65% 45%;             /* Eco green */
+  --chart-2: 198 85% 48%;             /* Sky blue */
+  --chart-3: 45 100% 55%;             /* Energy yellow */
+  --chart-4: 168 50% 55%;             /* Teal */
+  --chart-5: 280 60% 55%;             /* Purple */
+  
+  /* Typography */
   --font-sans: Inter, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: .5rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  
+  /* Shadows for Light Theme */
+  --shadow-2xs: 0px 1px 2px 0px rgba(26, 47, 58, 0.05);
+  --shadow-xs: 0px 1px 2px 0px rgba(26, 47, 58, 0.08);
+  --shadow-sm: 0px 2px 4px 0px rgba(26, 47, 58, 0.08), 0px 1px 2px -1px rgba(26, 47, 58, 0.06);
+  --shadow: 0px 4px 6px -1px rgba(26, 47, 58, 0.10), 0px 2px 4px -1px rgba(26, 47, 58, 0.06);
+  --shadow-md: 0px 6px 12px -2px rgba(26, 47, 58, 0.12), 0px 3px 7px -3px rgba(26, 47, 58, 0.08);
+  --shadow-lg: 0px 10px 20px -4px rgba(26, 47, 58, 0.14), 0px 4px 10px -3px rgba(26, 47, 58, 0.10);
+  --shadow-xl: 0px 20px 30px -6px rgba(26, 47, 58, 0.16), 0px 8px 14px -4px rgba(26, 47, 58, 0.12);
+  --shadow-2xl: 0px 25px 40px -8px rgba(26, 47, 58, 0.18);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -106,54 +112,54 @@
 }
 
 .dark {
-  /* Same as root - always use Deep Navy theme */
-  --button-outline: rgba(0,102,255, .30);
-  --badge-outline: rgba(0,168,150, .25);
-  --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(0,102,255, .05);
-  --elevate-2: rgba(0,168,150, .10);
-  --background: 219 62% 10%;
-  --foreground: 210 40% 98%;
-  --border: 216 40% 25%;
-  --card: 219 60% 12%;
-  --card-foreground: 210 40% 98%;
-  --card-border: 216 50% 20%;
-  --sidebar: 219 62% 11%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 216 50% 18%;
-  --sidebar-primary: 216 100% 50%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 175 100% 33%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 216 100% 50%;
-  --popover: 219 60% 13%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 216 50% 20%;
-  --primary: 216 100% 50%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 175 100% 33%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 216 30% 20%;
-  --muted-foreground: 210 20% 70%;
-  --accent: 96 100% 68%;
-  --accent-foreground: 219 62% 10%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --input: 216 40% 25%;
-  --ring: 216 100% 50%;
-  --chart-1: 216 100% 65%;
-  --chart-2: 175 100% 55%;
-  --chart-3: 79 100% 75%;
-  --chart-4: 195 100% 60%;
-  --chart-5: 260 80% 70%;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  /* Keep Light Theme for Consistency - Always Light Mode */
+  --button-outline: rgba(29, 185, 84, 0.3);
+  --badge-outline: rgba(15, 160, 206, 0.25);
+  --opaque-button-border-intensity: -8;
+  --elevate-1: rgba(29, 185, 84, 0.08);
+  --elevate-2: rgba(15, 160, 206, 0.12);
+  --background: 160 40% 98%;
+  --foreground: 200 30% 15%;
+  --border: 168 25% 85%;
+  --card: 0 0% 100%;
+  --card-foreground: 200 30% 15%;
+  --card-border: 168 25% 90%;
+  --sidebar: 160 35% 96%;
+  --sidebar-foreground: 200 30% 15%;
+  --sidebar-border: 168 25% 88%;
+  --sidebar-primary: 158 65% 45%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 198 85% 48%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 158 65% 45%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 200 30% 15%;
+  --popover-border: 168 25% 90%;
+  --primary: 158 65% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 198 85% 48%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 168 30% 94%;
+  --muted-foreground: 200 20% 40%;
+  --accent: 45 100% 55%;
+  --accent-foreground: 200 30% 15%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 168 25% 90%;
+  --ring: 158 65% 45%;
+  --chart-1: 158 65% 45%;
+  --chart-2: 198 85% 48%;
+  --chart-3: 45 100% 55%;
+  --chart-4: 168 50% 55%;
+  --chart-5: 280 60% 55%;
+  --shadow-2xs: 0px 1px 2px 0px rgba(26, 47, 58, 0.05);
+  --shadow-xs: 0px 1px 2px 0px rgba(26, 47, 58, 0.08);
+  --shadow-sm: 0px 2px 4px 0px rgba(26, 47, 58, 0.08), 0px 1px 2px -1px rgba(26, 47, 58, 0.06);
+  --shadow: 0px 4px 6px -1px rgba(26, 47, 58, 0.10), 0px 2px 4px -1px rgba(26, 47, 58, 0.06);
+  --shadow-md: 0px 6px 12px -2px rgba(26, 47, 58, 0.12), 0px 3px 7px -3px rgba(26, 47, 58, 0.08);
+  --shadow-lg: 0px 10px 20px -4px rgba(26, 47, 58, 0.14), 0px 4px 10px -3px rgba(26, 47, 58, 0.10);
+  --shadow-xl: 0px 20px 30px -6px rgba(26, 47, 58, 0.16), 0px 8px 14px -4px rgba(26, 47, 58, 0.12);
+  --shadow-2xl: 0px 25px 40px -8px rgba(26, 47, 58, 0.18);
 
 /* Fallback for older browsers */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
@@ -355,61 +361,62 @@
   }
 
   .eco-gradient-text {
-    background: linear-gradient(135deg, #00A896 0%, #0066FF 50%, #B2FF59 100%);
-    background-size: 200% 200%;
+    background: linear-gradient(90deg, #1DB954, #0FA0CE);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 4s ease infinite;
+    font-weight: 600;
   }
 
   .animated-gradient-bg {
-    background: linear-gradient(135deg, #0B132B 0%, #0066FF 30%, #00A896 70%, #0B132B 100%);
-    background-size: 400% 400%;
+    background: linear-gradient(135deg, #E8F5F1 0%, #C8E6E0 50%, #A8D8EA 100%);
+    background-size: 200% 200%;
     animation: gradientShift 15s ease infinite;
   }
   
   .electric-glow {
-    box-shadow: 0 0 20px rgba(0, 102, 255, 0.3), 0 0 40px rgba(0, 102, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(15, 160, 206, 0.2), 0 8px 40px rgba(15, 160, 206, 0.1);
   }
   
   .eco-glow {
-    box-shadow: 0 0 20px rgba(0, 168, 150, 0.3), 0 0 40px rgba(0, 168, 150, 0.2);
+    box-shadow: 0 4px 20px rgba(29, 185, 84, 0.2), 0 8px 40px rgba(29, 185, 84, 0.1);
   }
   
   .lime-glow {
-    box-shadow: 0 0 20px rgba(178, 255, 89, 0.4), 0 0 40px rgba(178, 255, 89, 0.2);
+    box-shadow: 0 4px 20px rgba(255, 179, 0, 0.25), 0 8px 40px rgba(255, 179, 0, 0.15);
   }
 
-  /* Enhanced Glassmorphism */
+  /* Enhanced Glassmorphism for Light Theme */
   .glass {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(26, 47, 58, 0.08);
+    box-shadow: 0 4px 16px rgba(26, 47, 58, 0.06);
   }
 
   .glass-strong {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(26, 47, 58, 0.1);
+    box-shadow: 0 8px 24px rgba(26, 47, 58, 0.08);
   }
   
   .glass-card {
-    background: rgba(11, 19, 43, 0.7);
-    backdrop-filter: blur(30px) saturate(150%);
-    -webkit-backdrop-filter: blur(30px) saturate(150%);
-    border: 1px solid rgba(0, 168, 150, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 102, 255, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px) saturate(200%);
+    -webkit-backdrop-filter: blur(16px) saturate(200%);
+    border: 1px solid rgba(26, 47, 58, 0.08);
+    box-shadow: 0 8px 24px rgba(26, 47, 58, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .glass-card:hover {
-    background: rgba(11, 19, 43, 0.8);
-    border: 1px solid rgba(0, 168, 150, 0.3);
-    box-shadow: 0 12px 48px 0 rgba(0, 102, 255, 0.2);
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(29, 185, 84, 0.15);
+    box-shadow: 0 12px 32px rgba(26, 47, 58, 0.12);
     transform: translateY(-4px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   /* CO2 Counter Animations */
@@ -471,135 +478,166 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   }
 
-  /* New Brighter Eco-Futuristic Styles */
+  /* Light Aesthetic Eco Theme Styles */
   
-  /* Gradient text effect for accent words */
+  /* Gradient text effect for accent words - Eco Green to Sky Blue */
   .gradient-text {
-    background: linear-gradient(90deg, #00FFB9, #1E90FF);
+    background: linear-gradient(90deg, #1DB954, #0FA0CE);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-weight: 600;
+    font-weight: 700;
   }
 
-  /* Hero gradient background */
+  /* Light hero gradient background with soft colors */
   .hero-gradient {
-    background: linear-gradient(135deg, #00E1A3 0%, #00B3FF 100%);
+    background: linear-gradient(135deg, #E8F5F1 0%, #C8E6E0 50%, #A8D8EA 100%);
     position: relative;
   }
 
   .hero-overlay {
-    background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25));
+    background: transparent;
   }
 
-  /* Neon text shadow for headings */
-  .neon-text {
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  /* Subtle text shadow for readability on light backgrounds */
+  .text-shadow-subtle {
+    text-shadow: 0 1px 3px rgba(26, 47, 58, 0.1);
   }
 
-  /* Glowing button styles */
-  .glow-button {
-    background: linear-gradient(90deg, #00E676, #00B0FF);
+  /* Primary button styles for light theme */
+  .btn-primary-light {
+    background: linear-gradient(90deg, #1DB954, #0FA0CE);
     color: #FFFFFF;
     border: none;
-    border-radius: 50px;
-    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
     font-weight: 600;
-    box-shadow: 0px 4px 20px rgba(0, 224, 163, 0.4);
+    box-shadow: 0px 4px 12px rgba(29, 185, 84, 0.25);
     transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
   }
 
-  .glow-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 25px rgba(0, 224, 163, 0.6);
+  .btn-primary-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 16px rgba(29, 185, 84, 0.35);
   }
 
-  /* Button pulse animation */
-  @keyframes buttonPulse {
+  /* Button pulse animation for light theme */
+  @keyframes buttonPulseLight {
     0%, 100% {
-      box-shadow: 0px 4px 20px rgba(0, 224, 163, 0.4);
+      box-shadow: 0px 4px 12px rgba(29, 185, 84, 0.25);
     }
     50% {
-      box-shadow: 0px 4px 30px rgba(0, 224, 163, 0.7);
+      box-shadow: 0px 4px 20px rgba(29, 185, 84, 0.4);
     }
   }
 
-  .pulse-glow {
-    animation: buttonPulse 2s ease-in-out infinite;
+  .pulse-glow-light {
+    animation: buttonPulseLight 2s ease-in-out infinite;
   }
 
-  /* Glassmorphism navbar */
-  .glass-nav {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  /* Glassmorphism navbar for light theme */
+  .glass-nav-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(26, 47, 58, 0.08);
+    box-shadow: 0 2px 12px rgba(26, 47, 58, 0.05);
   }
 
-  /* Logo gradient */
-  .logo-gradient {
-    background: linear-gradient(90deg, #00E676, #00B0FF);
+  /* Logo gradient for light theme */
+  .logo-gradient-light {
+    background: linear-gradient(90deg, #1DB954, #0FA0CE);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Floating animation for icons */
+  /* Floating animation for decorative elements */
   @keyframes float {
     0%, 100% {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translateY(-15px);
     }
   }
 
   .floating {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
   }
 
-  /* Card glassmorphism with brighter theme */
-  .glass-card-bright {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  /* Card glassmorphism for light aesthetic theme */
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px) saturate(200%);
+    -webkit-backdrop-filter: blur(16px) saturate(200%);
+    border: 1px solid rgba(26, 47, 58, 0.08);
+    box-shadow: 0 8px 24px rgba(26, 47, 58, 0.08);
+    transition: all 0.3s ease;
   }
 
-  /* Typography improvements */
+  .glass-card-light:hover {
+    box-shadow: 0 12px 32px rgba(26, 47, 58, 0.12);
+    transform: translateY(-4px);
+  }
+
+  /* Typography system */
   .heading-poppins {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.02em;
   }
 
   .subheading-nunito {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.01em;
   }
 
   .body-inter {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
+    letter-spacing: 0.01em;
   }
 
-  /* Glowing underline for active nav items */
-  .nav-glow {
+  /* Enhanced eco glow for light theme */
+  .eco-glow-light {
+    box-shadow: 0 4px 20px rgba(29, 185, 84, 0.2);
+  }
+
+  .sky-glow-light {
+    box-shadow: 0 4px 20px rgba(15, 160, 206, 0.2);
+  }
+
+  /* Bus marker animation for light theme */
+  @keyframes busMarkerPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 8px rgba(29, 185, 84, 0);
+    }
+  }
+
+  .bus-marker-light {
+    animation: busMarkerPulse 2s infinite;
+  }
+
+  /* Active nav indicator */
+  .nav-indicator {
     position: relative;
   }
 
-  .nav-glow::after {
+  .nav-indicator::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -2px;
     left: 0;
     right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #00E676, #00B0FF);
-    box-shadow: 0 0 8px rgba(0, 230, 118, 0.6);
+    height: 3px;
+    background: linear-gradient(90deg, #1DB954, #0FA0CE);
     border-radius: 2px;
   }
 }
