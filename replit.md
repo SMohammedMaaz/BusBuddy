@@ -10,6 +10,18 @@ The application uses a modern tech stack with React/TypeScript on the frontend, 
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+**November 8, 2025**
+- Fixed color palette: Corrected Lime color to exact HSL values (96 100% 68%) matching #B2FF59
+- Fixed Google Maps center: Changed from New York to Karnataka coordinates (12.6337, 77.1175)
+- Integrated BusMap component in Passenger dashboard with proper props and state management
+- Integrated DriverInterface component for Driver dashboard with bus number, route, and next stops
+- Integrated AdminPanel component for Admin dashboard with buses, analytics, and user statistics
+- Added glassmorphism enhancements throughout the application
+- Verified all three role-based dashboards (Passenger, Driver, Admin) are functioning correctly
+- All components now properly imported and wired with correct TypeScript types
+
 ## System Architecture
 
 ### Frontend Architecture
@@ -31,10 +43,11 @@ Preferred communication style: Simple, everyday language.
 - Local component state for UI interactions
 
 **Design Philosophy**
-- Sustainability-focused "Green Intelligence" theme
+- Sustainability-focused "Green Intelligence: AI for a Sustainable Planet" theme
+- **Color Palette**: Electric Blue (#0066FF), Eco Green (#00A896), Lime (#B2FF59), Deep Navy (#0B132B)
+- Enhanced glassmorphism effects with backdrop blur, floating cards, and animated gradients
 - Reference-based design inspired by Notion's clean layouts and Apple's minimalism
-- Custom eco-themed color palette with green accents
-- Glassmorphic UI elements with backdrop blur effects
+- Animated eco-themed UI with glowing effects and pulsing elements
 
 ### Backend Architecture
 
@@ -92,6 +105,7 @@ Preferred communication style: Simple, everyday language.
 **Google Services**
 - **Google Maps JavaScript API**: Real-time map rendering and bus location display
 - **Google Maps Marker API**: Custom bus markers on the map
+- **Map Configuration**: Centered on Karnataka (default: 12.6337, 77.1175) covering Mysuru (12.2958, 76.6394) and Bengaluru (12.9716, 77.5946)
 - Required API key: `VITE_GOOGLE_MAPS_API_KEY`
 
 **Firebase Services**
