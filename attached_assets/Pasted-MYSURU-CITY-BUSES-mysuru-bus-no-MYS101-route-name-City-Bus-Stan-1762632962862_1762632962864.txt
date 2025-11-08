@@ -1,0 +1,177 @@
+MYSURU CITY BUSES
+{
+  "mysuru": [
+    {
+      "bus_no": "MYS101",
+      "route_name": "City Bus Stand → Chamundi Hill",
+      "from": "City Bus Stand",
+      "to": "Chamundi Hill",
+      "via": ["Race Course", "Nanjumalige", "Hill Base"],
+      "departure_time": "07:00",
+      "gps": { "lat": 12.2987, "lng": 76.6575 },
+      "current_status": "En Route"
+    },
+    {
+      "bus_no": "MYS102",
+      "route_name": "City Bus Stand → Bannur",
+      "from": "City Bus Stand",
+      "to": "Bannur",
+      "via": ["Mullahalli", "Kadakola"],
+      "departure_time": "07:45",
+      "gps": { "lat": 12.2679, "lng": 76.7463 },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "MYS103",
+      "route_name": "City Bus Stand → Bogadi 2nd Stage",
+      "from": "City Bus Stand",
+      "to": "Bogadi 2nd Stage",
+      "via": ["Akashvani", "Kuvempunagar", "Hebbal"],
+      "departure_time": "08:30",
+      "gps": { "lat": 12.3091, "lng": 76.6205 },
+      "current_status": "Delayed"
+    },
+    {
+      "bus_no": "MYS104",
+      "route_name": "City Bus Stand → Srirampura",
+      "from": "City Bus Stand",
+      "to": "Srirampura",
+      "via": ["Vivekananda Circle", "Jayalakshmipuram"],
+      "departure_time": "09:15",
+      "gps": { "lat": 12.3274, "lng": 76.6398 },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "MYS105",
+      "route_name": "City Bus Stand → KRS",
+      "from": "City Bus Stand",
+      "to": "Krishna Raja Sagar (KRS)",
+      "via": ["Metagalli", "Koorgalli", "Brindavan Gardens"],
+      "departure_time": "10:00",
+      "gps": { "lat": 12.4246, "lng": 76.5681 },
+      "current_status": "At Depot"
+    }
+  ]
+}
+
+🔵 BENGALURU CITY BUSES
+{
+  "bengaluru": [
+    {
+      "bus_no": "BLR13",
+      "route_name": "Shivajinagar → Banashankari TTMC",
+      "from": "Shivajinagar Bus Station",
+      "to": "Banashankari TTMC",
+      "via": ["Richmond Circle", "Lalbagh", "Jayanagar 4th Block"],
+      "departure_time": "06:45",
+      "gps": { "lat": 12.9374, "lng": 77.5868 },
+      "current_status": "En Route"
+    },
+    {
+      "bus_no": "BLR61",
+      "route_name": "Majestic → Vijayanagar TTMC",
+      "from": "Kempegowda Bus Station (Majestic)",
+      "to": "Vijayanagar TTMC",
+      "via": ["Corporation Circle", "Hosahalli", "Maruthi Mandir"],
+      "departure_time": "07:20",
+      "gps": { "lat": 12.9716, "lng": 77.5545 },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "BLR171",
+      "route_name": "Majestic → Koramangala 1st Block",
+      "from": "Majestic",
+      "to": "Koramangala 1st Block",
+      "via": ["Richmond Circle", "Adugodi", "Forum Mall"],
+      "departure_time": "08:10",
+      "gps": { "lat": 12.9361, "lng": 77.6129 },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "BLR333E",
+      "route_name": "Majestic → Kadugodi (Whitefield)",
+      "from": "Majestic",
+      "to": "Kadugodi",
+      "via": ["Indiranagar", "KR Puram", "Whitefield"],
+      "departure_time": "09:00",
+      "gps": { "lat": 12.9859, "lng": 77.7326 },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "BLR365J",
+      "route_name": "Majestic → Jigani APC Circle",
+      "from": "Majestic",
+      "to": "Jigani APC Circle",
+      "via": ["BTM", "Electronic City", "Bommasandra"],
+      "departure_time": "09:40",
+      "gps": { "lat": 12.8221, "lng": 77.6764 },
+      "current_status": "Delayed"
+    }
+  ]
+}
+
+🌍 Optional: Combined JSON File for Replit or Firebase
+
+You can merge both into a single JSON file (bus_data.json):
+
+{
+  "mysuru": [ ... ],
+  "bengaluru": [ ... ]
+}
+
+
+Then in your app, you can switch between cities:
+
+fetch('/bus_data.json')
+  .then(res => res.json())
+  .then(data => {
+    const cityData = selectedCity === 'Mysuru' ? data.mysuru : data.bengaluru;
+    renderMap(cityData);
+  });
+
+🧠 How You Can Use It
+1️⃣ Real-time tracking simulation
+
+Each gps object can be updated every few seconds in Firebase to show live bus movement.
+
+2️⃣ AI ETA Model Input
+
+Use:
+
+Departure time
+
+Current GPS
+
+Destination coordinates
+
+Traffic API data
+
+The FastAPI model can then predict ETA dynamically.
+
+3️⃣ Passenger Alerts
+
+When the bus location is within 1 km of passenger’s selected stop, send an alert.
+
+4️⃣ Admin Dashboard Visualization
+
+Use current_status to color-code:
+
+🟢 Running
+
+🟠 Delayed
+
+🔵 On Schedule
+
+🔴 At Depot
+
+🧭 Next Step (Optional Enhancement)
+
+If you’d like, I can create a larger dataset (40–50 realistic routes) with:
+
+Actual BMTC and KSRTC route names
+
+Approx. GPS coordinates
+
+Route lengths
+
+ETA ranges

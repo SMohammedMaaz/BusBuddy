@@ -1,0 +1,332 @@
+{
+  "mysuru": [
+    {
+      "bus_no": "MYS101",
+      "route_name": "City Bus Stand \u2192 Chamundi Hill",
+      "from": "City Bus Stand",
+      "to": "Chamundi Hill",
+      "via": [
+        "Race Course",
+        "Nanjumalige",
+        "Hill Base"
+      ],
+      "departure_time": "07:00",
+      "gps": {
+        "lat": 12.341455042042877,
+        "lng": 76.6719737932032
+      },
+      "current_status": "At Depot"
+    },
+    {
+      "bus_no": "MYS102",
+      "route_name": "City Bus Stand \u2192 Bannur",
+      "from": "City Bus Stand",
+      "to": "Bannur",
+      "via": [
+        "Mullahalli",
+        "Kadakola"
+      ],
+      "departure_time": "07:45",
+      "gps": {
+        "lat": 12.320869328790478,
+        "lng": 76.6199334395449
+      },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "MYS103",
+      "route_name": "City Bus Stand \u2192 Bogadi 2nd Stage",
+      "from": "City Bus Stand",
+      "to": "Bogadi 2nd Stage",
+      "via": [
+        "Akashvani",
+        "Kuvempunagar",
+        "Hebbal"
+      ],
+      "departure_time": "08:30",
+      "gps": {
+        "lat": 12.247452012687752,
+        "lng": 76.61980087436748
+      },
+      "current_status": "En Route"
+    },
+    {
+      "bus_no": "MYS104",
+      "route_name": "City Bus Stand \u2192 Srirampura",
+      "from": "City Bus Stand",
+      "to": "Srirampura",
+      "via": [
+        "Vivekananda Circle",
+        "Jayalakshmipuram"
+      ],
+      "departure_time": "09:15",
+      "gps": {
+        "lat": 12.246528351773955,
+        "lng": 76.65377901749824
+      },
+      "current_status": "En Route"
+    },
+    {
+      "bus_no": "MYS105",
+      "route_name": "City Bus Stand \u2192 KRS",
+      "from": "City Bus Stand",
+      "to": "KRS",
+      "via": [
+        "Metagalli",
+        "Koorgalli",
+        "Brindavan Gardens"
+      ],
+      "departure_time": "10:00",
+      "gps": {
+        "lat": 12.304149780392764,
+        "lng": 76.64822408256306
+      },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "MYS106",
+      "route_name": "Chamundi Hill \u2192 City Bus Stand",
+      "from": "Chamundi Hill",
+      "to": "City Bus Stand",
+      "via": [
+        "Hill Base",
+        "Race Course"
+      ],
+      "departure_time": "10:45",
+      "gps": {
+        "lat": 12.302820305046957,
+        "lng": 76.62776887894009
+      },
+      "current_status": "At Depot"
+    },
+    {
+      "bus_no": "MYS107",
+      "route_name": "Kuvempunagar \u2192 Bogadi",
+      "from": "Kuvempunagar",
+      "to": "Bogadi",
+      "via": [
+        "JP Nagar",
+        "Saraswathipuram"
+      ],
+      "departure_time": "11:30",
+      "gps": {
+        "lat": 12.342189661519232,
+        "lng": 76.63771064666818
+      },
+      "current_status": "At Depot"
+    },
+    {
+      "bus_no": "MYS108",
+      "route_name": "KRS \u2192 City Bus Stand",
+      "from": "KRS",
+      "to": "City Bus Stand",
+      "via": [
+        "Koorgalli",
+        "Metagalli"
+      ],
+      "departure_time": "12:15",
+      "gps": {
+        "lat": 12.310059109973746,
+        "lng": 76.67045262706836
+      },
+      "current_status": "Delayed"
+    },
+    {
+      "bus_no": "MYS109",
+      "route_name": "City Bus Stand \u2192 Hebbal Industrial Area",
+      "from": "City Bus Stand",
+      "to": "Hebbal Industrial Area",
+      "via": [
+        "Vijayanagar",
+        "Metagalli"
+      ],
+      "departure_time": "13:00",
+      "gps": {
+        "lat": 12.334432867999261,
+        "lng": 76.63135743592217
+      },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "MYS110",
+      "route_name": "City Bus Stand \u2192 Udayagiri",
+      "from": "City Bus Stand",
+      "to": "Udayagiri",
+      "via": [
+        "Nazarbad",
+        "Bannimantap"
+      ],
+      "departure_time": "14:00",
+      "gps": {
+        "lat": 12.265740406760399,
+        "lng": 76.67905470684461
+      },
+      "current_status": "En Route"
+    }
+  ],
+  "bengaluru": [
+    {
+      "bus_no": "BLR101",
+      "route_name": "Shivajinagar \u2192 Banashankari TTMC",
+      "from": "Shivajinagar",
+      "to": "Banashankari TTMC",
+      "via": [
+        "Richmond Circle",
+        "Lalbagh",
+        "Jayanagar"
+      ],
+      "departure_time": "06:45",
+      "gps": {
+        "lat": 12.945734395266356,
+        "lng": 77.59036960390186
+      },
+      "current_status": "At Depot"
+    },
+    {
+      "bus_no": "BLR102",
+      "route_name": "Majestic \u2192 Vijayanagar TTMC",
+      "from": "Majestic",
+      "to": "Vijayanagar TTMC",
+      "via": [
+        "Corporation Circle",
+        "Hosahalli"
+      ],
+      "departure_time": "07:20",
+      "gps": {
+        "lat": 13.007781197238991,
+        "lng": 77.60822757936306
+      },
+      "current_status": "Delayed"
+    },
+    {
+      "bus_no": "BLR103",
+      "route_name": "Majestic \u2192 Koramangala",
+      "from": "Majestic",
+      "to": "Koramangala",
+      "via": [
+        "Richmond Circle",
+        "Adugodi",
+        "Forum Mall"
+      ],
+      "departure_time": "08:10",
+      "gps": {
+        "lat": 12.996481462016535,
+        "lng": 77.59045643636303
+      },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "BLR104",
+      "route_name": "Majestic \u2192 Kadugodi",
+      "from": "Majestic",
+      "to": "Kadugodi",
+      "via": [
+        "Indiranagar",
+        "KR Puram",
+        "Whitefield"
+      ],
+      "departure_time": "09:00",
+      "gps": {
+        "lat": 12.930977966636867,
+        "lng": 77.56513942568269
+      },
+      "current_status": "En Route"
+    },
+    {
+      "bus_no": "BLR105",
+      "route_name": "Majestic \u2192 Jigani",
+      "from": "Majestic",
+      "to": "Jigani",
+      "via": [
+        "BTM",
+        "Electronic City"
+      ],
+      "departure_time": "09:40",
+      "gps": {
+        "lat": 12.960329405363423,
+        "lng": 77.56974460751282
+      },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "BLR106",
+      "route_name": "KR Market \u2192 Peenya",
+      "from": "KR Market",
+      "to": "Peenya",
+      "via": [
+        "Basaveshwaranagar",
+        "Rajajinagar"
+      ],
+      "departure_time": "10:20",
+      "gps": {
+        "lat": 13.000352014692647,
+        "lng": 77.62219406821123
+      },
+      "current_status": "On Schedule"
+    },
+    {
+      "bus_no": "BLR107",
+      "route_name": "Yeshwanthpur \u2192 ITPL",
+      "from": "Yeshwanthpur",
+      "to": "ITPL",
+      "via": [
+        "Hebbal",
+        "Marathahalli"
+      ],
+      "departure_time": "11:00",
+      "gps": {
+        "lat": 12.936557780810931,
+        "lng": 77.642019076141
+      },
+      "current_status": "Delayed"
+    },
+    {
+      "bus_no": "BLR108",
+      "route_name": "Silk Board \u2192 HSR Layout",
+      "from": "Silk Board",
+      "to": "HSR Layout",
+      "via": [
+        "BTM",
+        "Agara"
+      ],
+      "departure_time": "11:45",
+      "gps": {
+        "lat": 13.018424384137047,
+        "lng": 77.62467614207573
+      },
+      "current_status": "Running"
+    },
+    {
+      "bus_no": "BLR109",
+      "route_name": "Koramangala \u2192 Electronic City",
+      "from": "Koramangala",
+      "to": "Electronic City",
+      "via": [
+        "Madiwala",
+        "Silk Board"
+      ],
+      "departure_time": "12:30",
+      "gps": {
+        "lat": 13.00293901741744,
+        "lng": 77.6273641374148
+      },
+      "current_status": "Delayed"
+    },
+    {
+      "bus_no": "BLR110",
+      "route_name": "Whitefield \u2192 Majestic",
+      "from": "Whitefield",
+      "to": "Majestic",
+      "via": [
+        "KR Puram",
+        "Indiranagar"
+      ],
+      "departure_time": "13:15",
+      "gps": {
+        "lat": 12.989219211067091,
+        "lng": 77.54794817740186
+      },
+      "current_status": "En Route"
+    }
+  ]
+}

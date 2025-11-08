@@ -1,0 +1,172 @@
+Build a full-stack web application called **BusBuddy – Smarter Routes. Safer Cities. Greener Karnataka**, an AI-powered sustainable public transport system for cities like Mysuru and Bengaluru 🇮🇳.
+
+The system should include **Passenger, Driver, and Admin dashboards** with:
+- Real-time bus tracking via Google Maps API
+- AI ETA prediction (FastAPI backend)
+- Eco-route optimization
+- SOS emergency system
+- Document validation for vehicle fitness/pollution
+- Smart notifications (push + WhatsApp/SMS)
+- Integrated chatbot on every page
+- Secure authentication system
+- Beautiful modern UI/UX (glassmorphism, smooth animation, eco-friendly palette)
+
+---
+
+### 🌍 GENERAL REQUIREMENTS:
+- Tech Stack:
+  - **Frontend:** React + Tailwind CSS + Framer Motion (for animations)
+  - **Backend:** Node.js + Firebase Functions + FastAPI (Python) for AI ETA model
+  - **Database:** Firebase Firestore + Realtime DB for GPS data
+  - **Auth:** Firebase Authentication (Google Sign-In + Email/Password + Phone OTP)
+  - **Maps:** Google Maps JavaScript API with animated moving bus icons
+  - **Notifications:** Firebase Cloud Messaging + Twilio (for SMS/WhatsApp)
+  - **Chatbot:** Dialogflow (floating chatbot icon on all pages)
+  - **Hosting:** Replit-compatible (Node + React + Python services)
+
+---
+
+### 🧭 AUTH SYSTEM (Universal)
+Create:
+- Sign Up, Log In, Log Out, and Forgot Password pages
+- Google Sign-In button
+- Phone OTP Login
+- Role-based signup:
+  - Passenger
+  - Driver (requires Vehicle Number & DL Number)
+  - Admin (requires Admin Key)
+- Auth UI should be minimalist, futuristic, with glowing glass panels and animated transitions.
+
+---
+
+### 🧍 PASSENGER DASHBOARD
+- **Search Bus by Number / Route / Stops**
+- **Real-time Bus Tracking** (Google Maps embedded)
+  - Show moving bus icons
+  - Show ETA, distance, route line
+- **Pin Bus Option:** Notify user when pinned bus is within 1 km
+- **Notifications:** via Firebase Cloud Messaging and Twilio
+- **SOS Button:** Floating bottom-right (red) → sends GPS + bus info to Admin & Police APIs
+- **Chatbot:** Bottom-right corner (Dialogflow)
+- **Eco Dashboard:**
+  - Shows CO₂ saved
+  - Eco route score
+  - Personal eco contribution animation
+- **Offline Mode:** Show cached map data if network lost
+
+---
+
+### 🚍 DRIVER DASHBOARD
+- **Login / Sign Up:** asks for Vehicle Number, DL Number, Route
+- **Route Panel:**
+  - Start Trip / End Trip button
+  - Real-time GPS auto-sync to Firebase
+- **Document Uploads:**
+  - Pollution Certificate (PUC)
+  - Fitness Certificate
+  - Driving License (DL)
+  - Registration Certificate (RC)
+  - AI auto-read expiry dates → store validity
+  - Auto notifications before expiry
+- **Eco Insights:**
+  - Daily fuel usage log
+  - AI driving tips
+  - Eco score bar (0–100)
+- **SOS Button (Driver version):** Immediate emergency alert
+- **Automatic GPS on trip start**
+
+---
+
+### 🧑‍💼 ADMIN DASHBOARD
+- **Live Map of all buses (multi-marker map)**  
+  - Click any bus → show driver, passengers, ETA, route  
+- **Document Validation Center:** shows all bus docs, expiry status (✅ / ⚠️ / ❌)
+- **SOS Alerts Panel:** shows live emergencies (flashing red)
+- **Analytics:**
+  - CO₂ saved (animated number)
+  - Active buses count
+  - Average delay time
+  - Fuel saved charts
+- **Driver Management:** approve / suspend driver accounts
+- **Broadcast Panel:** send message to all passengers (e.g., “Traffic jam near KSRTC Circle”)
+- **City Filter:** switch between Mysuru / Bengaluru data
+
+---
+
+### 💬 CHATBOT
+- Integrated on every page (bottom-right)
+- Uses Dialogflow or Replit Agent
+- Can answer:
+  - “Where is Bus 145B?”
+  - “Show my ETA.”
+  - “How much CO₂ saved?”
+  - “Help / SOS”
+- Animated entry + voice reply enabled
+- Languages: English + Kannada
+
+---
+
+### 🆘 SOS SYSTEM
+Adapt from [https://github.com/tony007-ux/hackthon](https://github.com/tony007-ux/hackthon)
+- Each SOS includes: user/driver ID, location, timestamp, bus number
+- Sends to:
+  - Admin Dashboard (flashing alert)
+  - Nearest police API endpoint
+  - Emergency contact (via Twilio SMS)
+- Confirmation popup (“SOS Sent Successfully ✅”)
+- Sound + vibration feedback
+
+---
+
+### 🗺️ GOOGLE MAPS INTEGRATION
+- Animated bus icons (emoji 🚌 or SVG)
+- Color-coded route lines
+- Live bus movement based on driver GPS updates
+- “You are here” marker for passengers
+- Eco-route animation (green glow trail)
+
+---
+
+### 🌈 UI/UX + DESIGN
+- **Theme:** Glassmorphism + floating panels + neon highlights
+- **Primary Color:** Electric Blue `#0066FF`
+- **Secondary Color:** Eco Green `#00A896`
+- **Accent:** Lime `#B2FF59`
+- **Dark Mode Background:** Deep Navy `#0B132B`
+- **Card Background:** `rgba(255, 255, 255, 0.08)`
+- **Font:** Poppins (Headings) + Inter (Body)
+- **Effects:**
+  - Soft-glow shadows
+  - Pop-in / pop-out animations on hover
+  - Animated gradient buttons
+  - Floating bus icons, glowing route trails
+  - Background animated particles (subtle)
+  - Dashboard widgets slide-in effect
+
+**Header Navbar:**
+- Left: BusBuddy Logo
+- Center: Navigation (Home | Dashboard | Eco Stats | Contact)
+- Right: Sign In / Sign Up buttons → animated modal pop-up
+- Footer: “© 2025 BusBuddy | Greener Karnataka 🌱”
+
+**Landing Page Sections:**
+1. Hero Section – “Smarter Routes. Safer Cities. Greener Karnataka.”  
+   - Background: animated eco city skyline
+   - Buttons: [Get Started] [Login]
+2. Features Carousel – cards pop out on hover  
+3. Screenshot Section – display bus map preview  
+4. Testimonials (optional)
+5. Call-to-Action Footer – glowing gradient buttons
+
+---
+
+### 🌐 AI FEATURES (FastAPI Backend)
+- Predict ETA using:
+  - Distance + Speed + Traffic API + Weather
+- Predict CO₂ reduction for eco-routing
+- Provide eco-score feedback
+- Python file: `/backend/ai_model.py` using FastAPI
+
+---
+
+### 🧠 DATA MODEL (Firebase Firestore)

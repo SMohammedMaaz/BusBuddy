@@ -10,7 +10,11 @@ export const users = pgTable("users", {
   name: text("name").notNull(),
   phone: text("phone"),
   role: text("role").notNull().default("passenger"),
+  vehicleNumber: text("vehicle_number"),
+  drivingLicense: text("driving_license"),
+  assignedRoute: text("assigned_route"),
   ecoPoints: integer("eco_points").notNull().default(0),
+  ecoScore: integer("eco_score").notNull().default(0),
   favoriteStops: jsonb("favorite_stops").$type<string[]>().default([]),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
@@ -30,10 +34,24 @@ export const buses = pgTable("buses", {
 
 export const routes = pgTable("routes", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  routeNumber: text("route_number"),
   name: text("name").notNull(),
+  from: text("from").notNull(),
+  to: text("to").notNull(),
+  serviceClass: text("service_class"),
+  city: text("city").notNull().default("Mysuru"),
   stops: jsonb("stops").$type<Array<{name: string, lat: number, lng: number}>>().notNull(),
   isEcoRoute: text("is_eco_route").notNull().default("false"),
   estimatedCO2Savings: real("estimated_co2_savings").notNull().default(0),
+});
+
+export const schedules = pgTable("schedules", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  routeId: varchar("route_id").references(() => routes.id).notNull(),
+  departureTime: text("departure_time").notNull(),
+  arrivalTime: text("arrival_time"),
+  daysOfWeek: jsonb("days_of_week").$type<string[]>().default(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+  isActive: text("is_active").notNull().default("true"),
 });
 
 export const analytics = pgTable("analytics", {
@@ -66,6 +84,45 @@ export const proximityAlerts = pgTable("proximity_alerts", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const documents = pgTable("documents", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  driverId: varchar("driver_id").references(() => users.id).notNull(),
+  vehicleNumber: text("vehicle_number").notNull(),
+  pucValid: timestamp("puc_valid"),
+  fitnessValid: timestamp("fitness_valid"),
+  dlValid: timestamp("dl_valid"),
+  rcValid: timestamp("rc_valid"),
+  pucUrl: text("puc_url"),
+  fitnessUrl: text("fitness_url"),
+  dlUrl: text("dl_url"),
+  rcUrl: text("rc_url"),
+  validationStatus: text("validation_status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const sosAlerts = pgTable("sos_alerts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  senderId: varchar("sender_id").references(() => users.id).notNull(),
+  senderRole: text("sender_role").notNull(),
+  vehicleNumber: text("vehicle_number"),
+  latitude: real("latitude").notNull(),
+  longitude: real("longitude").notNull(),
+  message: text("message"),
+  resolved: text("resolved").notNull().default("false"),
+  resolvedAt: timestamp("resolved_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const ecoStats = pgTable("eco_stats", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  date: timestamp("date").notNull().defaultNow(),
+  fuelSaved: real("fuel_saved").notNull().default(0),
+  co2Saved: real("co2_saved").notNull().default(0),
+  avgDelay: real("avg_delay").notNull().default(0),
+  totalTrips: integer("total_trips").notNull().default(0),
+  city: text("city").notNull().default("Mysuru"),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -77,6 +134,10 @@ export const insertBusSchema = createInsertSchema(buses).omit({
 });
 
 export const insertRouteSchema = createInsertSchema(routes).omit({
+  id: true,
+});
+
+export const insertScheduleSchema = createInsertSchema(schedules).omit({
   id: true,
 });
 
@@ -94,15 +155,38 @@ export const insertProximityAlertSchema = createInsertSchema(proximityAlerts).om
   createdAt: true,
 });
 
+export const insertDocumentSchema = createInsertSchema(documents).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSosAlertSchema = createInsertSchema(sosAlerts).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertEcoStatsSchema = createInsertSchema(ecoStats).omit({
+  id: true,
+  date: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertBus = z.infer<typeof insertBusSchema>;
 export type Bus = typeof buses.$inferSelect;
 export type InsertRoute = z.infer<typeof insertRouteSchema>;
 export type Route = typeof routes.$inferSelect;
+export type InsertSchedule = z.infer<typeof insertScheduleSchema>;
+export type Schedule = typeof schedules.$inferSelect;
 export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
 export type Analytics = typeof analytics.$inferSelect;
 export type InsertBusCompliance = z.infer<typeof insertBusComplianceSchema>;
 export type BusCompliance = typeof busCompliance.$inferSelect;
 export type InsertProximityAlert = z.infer<typeof insertProximityAlertSchema>;
 export type ProximityAlert = typeof proximityAlerts.$inferSelect;
+export type InsertDocument = z.infer<typeof insertDocumentSchema>;
+export type Document = typeof documents.$inferSelect;
+export type InsertSosAlert = z.infer<typeof insertSosAlertSchema>;
+export type SosAlert = typeof sosAlerts.$inferSelect;
+export type InsertEcoStats = z.infer<typeof insertEcoStatsSchema>;
+export type EcoStats = typeof ecoStats.$inferSelect;
