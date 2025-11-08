@@ -50,6 +50,9 @@ app.use((req, res, next) => {
   const { seedDatabase } = await import("./storage");
   await seedDatabase();
   
+  const { startBusSimulator } = await import("./busSimulator");
+  startBusSimulator();
+  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

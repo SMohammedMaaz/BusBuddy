@@ -10,9 +10,9 @@ import {
   signInWithPhoneNumber,
   ConfirmationResult
 } from "firebase/auth";
-import { auth, googleProvider, db } from "@/lib/firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, googleProvider } from "@/lib/firebase";
 import type { User } from "@shared/schema";
+import { apiRequest } from "@/lib/queryClient";
 
 interface AuthContextType {
   currentUser: FirebaseUser | null;
@@ -44,9 +44,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          setUserData(userDoc.data() as User);
+        try {
+          const response = await fetch(`/api/users/${user.uid}`);
+          if (response.ok) {
+            const data = await response.json();
+            setUserData(data);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
         }
       } else {
         setUserData(null);
@@ -58,24 +63,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const createUserDocument = async (user: FirebaseUser, additionalData?: { name?: string; role?: string }) => {
-    const userRef = doc(db, "users", user.uid);
-    const snapshot = await getDoc(userRef);
+    try {
+      const response = await fetch(`/api/users/${user.uid}`);
+      
+      if (!response.ok) {
+        const { email } = user;
+        const newUserData = {
+          firebaseUid: user.uid,
+          email: email || "",
+          name: additionalData?.name || user.displayName || "User",
+          phone: user.phoneNumber || null,
+          role: additionalData?.role || "passenger",
+          ecoPoints: 0,
+          favoriteStops: [],
+        };
 
-    if (!snapshot.exists()) {
-      const { email } = user;
-      const userData = {
-        firebaseUid: user.uid,
-        email: email || "",
-        name: additionalData?.name || user.displayName || "User",
-        phone: user.phoneNumber || null,
-        role: additionalData?.role || "passenger",
-        ecoPoints: 0,
-        favoriteStops: [],
-        createdAt: new Date(),
-      };
-
-      await setDoc(userRef, userData);
-      setUserData(userData as User);
+        const createResponse = await apiRequest("/api/users", {
+          method: "POST",
+          body: JSON.stringify(newUserData),
+        });
+        
+        setUserData(createResponse as User);
+      } else {
+        const existingUser = await response.json();
+        setUserData(existingUser);
+      }
+    } catch (error) {
+      console.error("Error creating user in database:", error);
+      throw error;
     }
   };
 
