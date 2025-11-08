@@ -44,6 +44,14 @@ export default function Dashboard() {
   // Derive selected bus from live buses array
   const selectedBus = selectedBusId ? buses.find(b => b.id === selectedBusId) || null : null;
 
+  // Filter buses based on search query
+  const filteredBuses = searchQuery
+    ? buses.filter(bus => 
+        bus.busNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        bus.routeName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : buses;
+
   // Fetch eco stats
   const { data: ecoStats } = useQuery<EcoStats[]>({
     queryKey: ["/api/eco-stats"],
@@ -220,31 +228,43 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Available Buses */}
                 <Card className="glass-card-light border-primary/10 p-6">
-                  <h3 className="text-xl font-bold mb-4 text-foreground">Available Buses</h3>
+                  <h3 className="text-xl font-bold mb-4 text-foreground">
+                    {searchQuery ? `Search Results (${filteredBuses.length})` : "Available Buses"}
+                  </h3>
                   <div className="space-y-3">
-                    {buses.slice(0, 6).map((bus) => (
-                      <Card key={bus.id} className="glass-card-light border-primary/10 p-4 hover-elevate">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary electric-glow flex items-center justify-center">
-                              <Bus className="w-6 h-6 text-white" />
+                    {filteredBuses.length > 0 ? (
+                      filteredBuses.slice(0, 6).map((bus) => (
+                        <Card key={bus.id} className="glass-card-light border-primary/10 p-4 hover-elevate" data-testid={`card-bus-${bus.busNumber}`}>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary electric-glow flex items-center justify-center">
+                                <Bus className="w-6 h-6 text-white" />
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
+                                <p className="text-sm text-muted-foreground">{bus.routeName}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
-                              <p className="text-sm text-muted-foreground">{bus.routeName}</p>
+                            <div className="text-right">
+                              <Badge className="bg-secondary/20 text-secondary">
+                                {bus.currentSpeed} km/h
+                              </Badge>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {bus.status === "active" ? "On Route" : "Stopped"}
+                              </p>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <Badge className="bg-secondary/20 text-secondary">
-                              {bus.currentSpeed} km/h
-                            </Badge>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              {bus.status === "active" ? "On Route" : "Stopped"}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
+                        </Card>
+                      ))
+                    ) : (
+                      <div className="text-center py-8" data-testid="no-results-message">
+                        <AlertCircle className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                        <h4 className="font-bold text-foreground mb-2">No buses found</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Try searching with a different bus number or route name
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </Card>
 

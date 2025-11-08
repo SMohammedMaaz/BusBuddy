@@ -11,6 +11,17 @@ The project aims to deliver a professional, intuitive, and eco-conscious user ex
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+
+**November 8, 2025 - Bus Search Functionality**
+- **Real-time Bus Search System**: Implemented instant bus filtering
+  - Search by bus number (e.g., "145B") or route name (e.g., "Mysuru")
+  - Live filtering as you type in the search bar
+  - Shows matching results count: "Search Results (X)"
+  - Displays "No buses found" message with helpful icon when no matches
+  - Searches across both bus number and route name fields
+  - Limits display to top 6 results for optimal performance
+
 ## System Architecture
 
 ### Frontend Architecture
