@@ -1,0 +1,164 @@
+BUSBUDDY – AI-Powered Smart Bus Ecosystem for Karnataka
+🌱 Theme: “Green Intelligence: AI for a Sustainable Planet”
+💡 Tagline: “Smarter Routes. Safer Cities. Greener Karnataka.”
+🚨 PROBLEM STATEMENT
+
+In cities like Mysuru and Bengaluru, thousands of commuters — especially students and professionals — depend on city buses every day.
+But they face:
+
+🚏 Long waiting hours with no idea where the bus is
+
+⏱️ Unpredictable timings due to traffic
+
+🚍 Buses running with expired pollution or fitness certificates
+
+⚠️ No emergency SOS support for passengers
+
+🌫️ Outdated, unoptimized routes that waste fuel and emit CO₂
+
+This results in inefficiency, safety risks, and environmental damage.
+
+💚 SOLUTION
+
+BusBuddy is an AI-powered, eco-intelligent, and safety-first transport ecosystem that revolutionizes public bus travel across Karnataka.
+
+It combines:
+
+🧠 AI for real-time ETA & eco-routing
+
+📍 GPS-based live bus tracking
+
+🌱 Eco-dashboard with CO₂ and fuel analytics
+
+🚨 SOS system for emergencies
+
+💬 Chatbot for instant support
+
+⚙️ Smart admin tools for compliance & analytics
+
+BusBuddy connects passengers, drivers, and administrators into a single smart platform to create a greener, safer, and smarter commute.
+
+🧩 SYSTEM MODULES
+Role	Platform	Description
+🧍 Passenger	Mobile/Web App	Track, Search, SOS, Notifications
+🚍 Driver	Driver App	Share GPS, Report Issues, Compliance Uploads
+🧑‍💼 Admin	Web Dashboard	Fleet Monitoring, Analytics, Compliance, Alerts
+🧍‍♀️ PASSENGER FEATURES
+Category	Feature	Description
+🔍 Bus Search	Search by bus number / route (e.g., “145B Mysuru to VVIET”)	Displays route map, stops, ETA
+🗺️ Live Tracking	View moving bus icon on Google Map	Updated every few seconds
+⏰ Smart Alerts	Notification when pinned bus is 1 km away	Push, SMS, WhatsApp
+🧭 Eco Route Info	Suggests eco-efficient route	Based on AI data
+🧾 Bus Info	Shows bus type, driver info, certificate validity	Transparency for passengers
+🚨 SOS Button	Sends emergency alert to police, control room, and emergency contact	Uses live GPS
+💬 Chatbot	“Ask BusBuddy” bot helps with ETA, SOS, routes	Dialogflow/AI
+📱 Offline Mode	Cached data for areas with low signal	Auto-syncs later
+🌤️ Weather-Aware ETA	Adjusts arrival time if raining or traffic-heavy	Uses OpenWeather API
+🧠 AI Voice Assistant	Speaks ETA updates (“Bus 94 arriving in 3 mins”)	TTS integration
+🪩 UI/UX	Glassmorphism, smooth animations, gradient backgrounds	Tailwind + Framer Motion
+🚍 DRIVER FEATURES
+Category	Feature	Description
+🗺️ Route Panel	See assigned route with stops	Interactive mini-map
+📡 Start/End Trip	Start route, stop when trip ends	Updates real-time GPS
+📍 Share GPS	Sends location every 3–5 seconds to backend	Firebase Realtime DB
+⚠️ Report Traffic	Tap to report jams, accidents, road issues	Updates ETA prediction AI
+🧾 Upload Docs	Upload PUC + Fitness Certificates	Validates eco-compliance
+📊 Fuel Log	Enter daily fuel consumption	Eco analytics
+🧠 AI Driving Insights	“Avoid idling too long” or “Eco driving score: 87%”	AI feedback model
+🧑‍✈️ Driver Profile	Driver name, bus number, rating	For admin & passengers
+🚨 SOS Support	Send quick SOS alert if breakdown or emergency	Integrated with same SOS API
+🧑‍💼 ADMIN FEATURES (Transport Authority Panel)
+Category	Feature	Description
+🗺️ Fleet Overview	View all active buses on live map	Track movement in real time
+🧾 Document Validation	Manage vehicle fitness & pollution certificates	Flags expired or invalid
+📈 Analytics Dashboard	CO₂ saved, average delay, fuel stats	Visual charts & reports
+🧠 AI Insights	“Route 145B is often delayed at 5 PM”	Smart recommendations
+🚨 SOS Management	View SOS reports live with map location	Contact responders
+🔔 Notification Control	Send broadcast alerts to passengers	(“Traffic on Mysuru Ring Road”)
+🧾 Driver & Route Management	Add/remove buses, assign routes	Admin tools
+🌍 City Selector	Toggle Mysuru / Bengaluru	Dual city support
+💬 Chatbot Monitor	View frequently asked passenger queries	AI learning loop
+📊 Eco Performance Report	See daily/monthly CO₂ and fuel reduction metrics	Downloadable reports
+🧠 AI INTEGRATIONS
+AI Feature	Tech	Function
+ETA Prediction	FastAPI + ML model	Predicts arrival time
+Eco Routing	AI optimizer	Suggests low-emission routes
+AI Alerts	Node + Firebase Functions	Sends “Bus is 1 km away”
+Chatbot	Dialogflow / OpenAI	Passenger query handling
+SOS Detector	AI + GPS trigger	Recognizes danger pattern or repeated taps
+🆘 SOS SYSTEM (Custom Adaptation)
+
+Adapted from your provided GitHub repo (tony007-ux/hackthon
+)
+
+Rebuilt for BusBuddy with transport emergency context:
+
+SOS available on every screen
+
+Click or voice-trigger (“Help me, BusBuddy!”)
+
+Sends:
+
+GPS coordinates
+
+Bus ID & driver name
+
+Timestamp
+
+Route name
+
+User info
+
+Notifies:
+
+Nearest Police Station API
+
+Admin dashboard (flashing alert)
+
+Passenger’s emergency contact (SMS/WhatsApp)
+
+✅ Real-time visibility on admin map: bus turns red and pulses if SOS triggered.
+
+💬 CHATBOT (Every Page)
+
+Appears as floating icon (bottom-right).
+
+Handles queries like:
+
+“Where is Bus 145B?”
+
+“When will it reach VVIET College?”
+
+“Show my CO₂ savings.”
+
+“SOS help.”
+
+Framework: Dialogflow / OpenAI Replit Agent.
+
+Supports English + Kannada text and voice.
+
+Adaptive — learns from FAQs.
+
+🧭 USER FLOW SCENARIO
+
+Example:
+
+Suhani, a student at VVIET Mysuru, opens BusBuddy at 12:45 PM.
+
+She searches Bus 145B (VVIET → City Bus Stand).
+
+App shows:
+
+ETA: 2:00 PM
+
+Distance: 6.3 km
+
+Current location: Near Bannimantap 🗺️
+
+She pins it.
+
+At 1:58 PM, Suhani receives a WhatsApp alert:
+
+“🚍 Bus 145B is 1 km away from VVIET College! Get ready to board 🌱”
+
+Onboarding complete — BusBuddy confirms with animation.
