@@ -14,17 +14,35 @@ import { BusNotifications } from "@/components/BusNotifications";
 import { 
   Bus, MapPin, LogOut, Search, Navigation, Shield, 
   Users, TrendingUp, FileCheck, Clock, AlertCircle,
-  Upload, Leaf, BarChart3, Bell, Settings
+  Upload, Leaf, BarChart3, Bell, Settings, Pin, PinOff
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Bus as BusType, EcoStats, Analytics } from "@shared/schema";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+
+// Calculate distance between two coordinates in km using Haversine formula
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
   const [activeRole, setActiveRole] = useState<"passenger" | "driver" | "admin">("passenger");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
+  const [pinnedBusId, setPinnedBusId] = useState<string | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [hasNotified, setHasNotified] = useState(false);
 
   // Get role from URL params
   useEffect(() => {
@@ -35,6 +53,28 @@ export default function Dashboard() {
     }
   }, []);
 
+  // Request user location permission
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.log("Location permission denied or unavailable:", error);
+          toast({
+            title: "Location Permission Needed",
+            description: "Please enable location access to use the Pin Bus feature and receive proximity notifications.",
+            variant: "destructive",
+          });
+        }
+      );
+    }
+  }, [toast]);
+
   // Fetch buses data
   const { data: buses = [] } = useQuery<BusType[]>({
     queryKey: ["/api/buses"],
@@ -43,6 +83,7 @@ export default function Dashboard() {
 
   // Derive selected bus from live buses array
   const selectedBus = selectedBusId ? buses.find(b => b.id === selectedBusId) || null : null;
+  const pinnedBus = pinnedBusId ? buses.find(b => b.id === pinnedBusId) || null : null;
 
   // Filter buses based on search query
   const filteredBuses = searchQuery
@@ -51,6 +92,58 @@ export default function Dashboard() {
         bus.routeName.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : buses;
+
+  // Check distance to pinned bus and notify when within 1km
+  useEffect(() => {
+    if (!pinnedBus || !userLocation || hasNotified) return;
+
+    const distance = calculateDistance(
+      userLocation.lat,
+      userLocation.lng,
+      pinnedBus.latitude,
+      pinnedBus.longitude
+    );
+
+    if (distance <= 1) {
+      toast({
+        title: "Bus Approaching!",
+        description: `${pinnedBus.busNumber} (${pinnedBus.routeName}) is within ${distance.toFixed(2)}km of your location!`,
+        duration: 10000,
+      });
+      setHasNotified(true);
+    }
+  }, [pinnedBus, userLocation, hasNotified, toast]);
+
+  // Handle pin/unpin bus
+  const handlePinBus = () => {
+    if (!selectedBusId) {
+      toast({
+        title: "Select a Bus First",
+        description: "Please click on a bus from the map or list to pin it.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (pinnedBusId === selectedBusId) {
+      // Unpin
+      setPinnedBusId(null);
+      setHasNotified(false);
+      toast({
+        title: "Bus Unpinned",
+        description: "You'll no longer receive notifications for this bus.",
+      });
+    } else {
+      // Pin new bus
+      setPinnedBusId(selectedBusId);
+      setHasNotified(false);
+      const bus = buses.find(b => b.id === selectedBusId);
+      toast({
+        title: "Bus Pinned!",
+        description: `Tracking ${bus?.busNumber} (${bus?.routeName}). You'll be notified when it's within 1km of your location.`,
+      });
+    }
+  };
 
   // Fetch eco stats
   const { data: ecoStats } = useQuery<EcoStats[]>({
@@ -162,9 +255,23 @@ export default function Dashboard() {
                   <Button className="bg-gradient-to-r from-primary to-secondary text-white" data-testid="button-search">
                     <Search className="w-5 h-5" />
                   </Button>
-                  <Button variant="outline" className="border-accent text-accent hover-elevate" data-testid="button-pin-bus">
-                    <Bell className="w-5 h-5 mr-2" />
-                    Pin Bus
+                  <Button 
+                    variant={pinnedBusId ? "default" : "outline"} 
+                    className={pinnedBusId ? "bg-gradient-to-r from-accent to-accent/80 text-background" : "border-accent text-accent"} 
+                    onClick={handlePinBus}
+                    data-testid="button-pin-bus"
+                  >
+                    {pinnedBusId ? (
+                      <>
+                        <Pin className="w-5 h-5 mr-2" />
+                        {pinnedBusId === selectedBusId ? "Unpin Bus" : "Change Pin"}
+                      </>
+                    ) : (
+                      <>
+                        <PinOff className="w-5 h-5 mr-2" />
+                        Pin Bus
+                      </>
+                    )}
                   </Button>
                 </div>
               </Card>
@@ -234,14 +341,29 @@ export default function Dashboard() {
                   <div className="space-y-3">
                     {filteredBuses.length > 0 ? (
                       filteredBuses.slice(0, 6).map((bus) => (
-                        <Card key={bus.id} className="glass-card-light border-primary/10 p-4 hover-elevate" data-testid={`card-bus-${bus.busNumber}`}>
+                        <Card 
+                          key={bus.id} 
+                          className={`glass-card-light p-4 hover-elevate cursor-pointer ${
+                            bus.id === pinnedBusId ? 'border-accent border-2' : 'border-primary/10'
+                          }`}
+                          onClick={() => setSelectedBusId(bus.id)}
+                          data-testid={`card-bus-${bus.busNumber}`}
+                        >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary electric-glow flex items-center justify-center">
                                 <Bus className="w-6 h-6 text-white" />
                               </div>
                               <div>
-                                <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
+                                  {bus.id === pinnedBusId && (
+                                    <Badge className="bg-accent/20 text-accent">
+                                      <Pin className="w-3 h-3 mr-1" />
+                                      Pinned
+                                    </Badge>
+                                  )}
+                                </div>
                                 <p className="text-sm text-muted-foreground">{bus.routeName}</p>
                               </div>
                             </div>

@@ -13,6 +13,18 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**November 8, 2025 - Pin Bus & Proximity Notifications**
+- **Pin Bus Feature**: Track specific buses with location-based notifications
+  - Click on any bus from the list to select it
+  - Press "Pin Bus" button to start tracking that bus
+  - Automatically requests user's geolocation permission
+  - Calculates real-time distance using Haversine formula
+  - Shows notification when pinned bus is within 1km of user location
+  - Button changes to show "Unpin Bus" or "Change Pin" based on state
+  - Visual indicators: Pinned bus has accent border and "Pinned" badge
+  - Prevents duplicate notifications for same approach
+  - Can unpin or switch to different bus anytime
+  
 **November 8, 2025 - Bus Search Functionality**
 - **Real-time Bus Search System**: Implemented instant bus filtering
   - Search by bus number (e.g., "145B") or route name (e.g., "Mysuru")
