@@ -42,10 +42,23 @@ Preferred communication style: Simple, everyday language.
   - Changed Dashboard to use `selectedBusId` instead of `selectedBus` object
   - Derives selectedBus from live buses array each render
   - Ensures ETA and animations update with simulator (every 3 seconds)
-- **Database Seeding**: Real Karnataka bus routes
-  - Seeded 10 routes (5 Mysuru, 5 Bengaluru) with 87 schedules
-  - 10 active buses with realistic data
-  - Routes include eco-routing information and stops
+- **Database Seeding**: Real Karnataka bus routes with authentic KSRTC data
+  - **Mysuru Routes** (5 buses):
+    - MYS101: City Bus Stand → Chamundi Hill (via Race Course, Nanjumalige, Hill Base)
+    - MYS102: City Bus Stand → Bannur (via Mullahalli, Kadakola)
+    - MYS103: City Bus Stand → Bogadi 2nd Stage (via Akashvani, Kuvempunagar, Hebbal)
+    - MYS104: City Bus Stand → Srirampura (via Vivekananda Circle, Jayalakshmipuram)
+    - MYS105: City Bus Stand → KRS (via Metagalli, Koorgalli, Brindavan Gardens)
+  - **Bengaluru Routes** (5 buses):
+    - BLR13: Shivajinagar → Banashankari TTMC (via Richmond Circle, Lalbagh, Jayanagar 4th Block)
+    - BLR61: Majestic → Vijayanagar TTMC (via Corporation Circle, Hosahalli, Maruthi Mandir)
+    - BLR171: Majestic → Koramangala 1st Block (via Richmond Circle, Adugodi, Forum Mall)
+    - BLR333E: Majestic → Kadugodi/Whitefield (via Indiranagar, KR Puram, Whitefield)
+    - BLR365J: Majestic → Jigani APC Circle (via BTM, Electronic City, Bommasandra)
+  - **Data Specs**: 10 routes, 10 active buses, 70 schedules (7 per route throughout the day)
+  - **GPS Coordinates**: Real latitude/longitude for each bus location
+  - **Route Details**: Authentic from/to locations, via stops, departure times, and current status
+  - Routes include eco-routing flags and CO₂ savings estimates
 
 **November 8, 2025 - Complete Light Aesthetic Theme Implementation**
 - **Complete Design Transformation**: Successfully transformed entire application from dark to light aesthetic eco theme with excellent text visibility
