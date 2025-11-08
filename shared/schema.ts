@@ -34,10 +34,24 @@ export const buses = pgTable("buses", {
 
 export const routes = pgTable("routes", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  routeNumber: text("route_number"),
   name: text("name").notNull(),
+  from: text("from").notNull(),
+  to: text("to").notNull(),
+  serviceClass: text("service_class"),
+  city: text("city").notNull().default("Mysuru"),
   stops: jsonb("stops").$type<Array<{name: string, lat: number, lng: number}>>().notNull(),
   isEcoRoute: text("is_eco_route").notNull().default("false"),
   estimatedCO2Savings: real("estimated_co2_savings").notNull().default(0),
+});
+
+export const schedules = pgTable("schedules", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  routeId: varchar("route_id").references(() => routes.id).notNull(),
+  departureTime: text("departure_time").notNull(),
+  arrivalTime: text("arrival_time"),
+  daysOfWeek: jsonb("days_of_week").$type<string[]>().default(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+  isActive: text("is_active").notNull().default("true"),
 });
 
 export const analytics = pgTable("analytics", {
@@ -123,6 +137,10 @@ export const insertRouteSchema = createInsertSchema(routes).omit({
   id: true,
 });
 
+export const insertScheduleSchema = createInsertSchema(schedules).omit({
+  id: true,
+});
+
 export const insertAnalyticsSchema = createInsertSchema(analytics).omit({
   id: true,
 });
@@ -158,6 +176,8 @@ export type InsertBus = z.infer<typeof insertBusSchema>;
 export type Bus = typeof buses.$inferSelect;
 export type InsertRoute = z.infer<typeof insertRouteSchema>;
 export type Route = typeof routes.$inferSelect;
+export type InsertSchedule = z.infer<typeof insertScheduleSchema>;
+export type Schedule = typeof schedules.$inferSelect;
 export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
 export type Analytics = typeof analytics.$inferSelect;
 export type InsertBusCompliance = z.infer<typeof insertBusComplianceSchema>;
