@@ -6,7 +6,8 @@ import { Card } from "@/components/ui/card";
 import { AuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
 import BgBuses from "@/components/BgBuses";
-import { MapPin, Zap, Leaf, Shield, TrendingUp, Users } from "lucide-react";
+import { FeatureCards } from "@/components/FeatureCards";
+import { MapPin, Zap, TrendingUp, Users, Leaf } from "lucide-react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -197,11 +198,11 @@ export default function Landing() {
         </section>
 
         {/* Features Section */}
-        <section className="py-32 px-6 relative">
+        <section className="py-32 relative">
           <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
-          <div className="max-w-7xl mx-auto relative z-10">
+          <div className="relative z-10">
             <motion.h2 
-              className="text-5xl font-display font-bold text-center mb-20 text-white drop-shadow-lg"
+              className="text-5xl font-display font-bold text-center mb-8 text-white drop-shadow-lg px-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -209,77 +210,7 @@ export default function Landing() {
             >
               Intelligent Features for a <span className="eco-gradient-text">Greener Future</span>
             </motion.h2>
-            
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              {[
-                {
-                  icon: MapPin,
-                  gradient: "from-green-400 to-green-600",
-                  title: "Real-Time GPS Tracking",
-                  description: "See exactly where your bus is on an interactive map with live location updates every few seconds."
-                },
-                {
-                  icon: Zap,
-                  gradient: "from-blue-400 to-blue-600",
-                  title: "AI-Powered ETA",
-                  description: "Get accurate arrival predictions using machine learning that factors in traffic, speed, and historical patterns."
-                },
-                {
-                  icon: Leaf,
-                  gradient: "from-emerald-400 to-emerald-600",
-                  title: "Eco-Route Optimizer",
-                  description: "Discover the most fuel-efficient routes and see your personal CO₂ savings grow with every trip."
-                },
-                {
-                  icon: Shield,
-                  gradient: "from-purple-400 to-purple-600",
-                  title: "Role-Based Access",
-                  description: "Tailored dashboards for passengers, drivers, and administrators with features specific to each role."
-                },
-                {
-                  icon: TrendingUp,
-                  gradient: "from-orange-400 to-orange-600",
-                  title: "Analytics Dashboard",
-                  description: "Track your environmental impact with beautiful visualizations of CO₂ savings and fuel efficiency."
-                },
-                {
-                  icon: Users,
-                  gradient: "from-pink-400 to-pink-600",
-                  title: "Community Impact",
-                  description: "Join thousands making a difference. See collective sustainability achievements across all users."
-                }
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                >
-                  <motion.div
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Card className="p-8 glass-strong border-white/20 h-full">
-                      <motion.div 
-                        className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-2xl`}
-                        whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <feature.icon className="w-10 h-10 text-white" />
-                      </motion.div>
-                      <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
-                      <p className="text-white/80 leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </Card>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <FeatureCards />
           </div>
         </section>
 

@@ -10,6 +10,8 @@ import { RoleSwitcher } from "@/components/RoleSwitcher";
 import { DriverInterface } from "@/components/DriverInterface";
 import { AdminPanel } from "@/components/AdminPanel";
 import { AIEcoRecommendation } from "@/components/AIEcoRecommendation";
+import { ProximityAlerts } from "@/components/ProximityAlerts";
+import { BusCompliancePanel } from "@/components/BusCompliancePanel";
 import { LogOut, Menu, Moon, Sun, AlertCircle, MapPin } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { Bus, Analytics } from "@shared/schema";
@@ -301,6 +303,14 @@ export default function Dashboard() {
                   </motion.div>
                 )}
 
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <ProximityAlerts buses={buses} />
+                </motion.div>
+
                 {/* AI Eco Route Recommendation Popup */}
                 <AIEcoRecommendation 
                   busNumber={selectedBus?.busNumber}
@@ -320,8 +330,9 @@ export default function Dashboard() {
             )}
 
             {activeRole === "admin" && (
-              <motion.div key="admin" {...fadeIn}>
+              <motion.div key="admin" {...fadeIn} className="space-y-6">
                 <AdminPanel buses={buses} analytics={analytics} totalUsers={12500} />
+                <BusCompliancePanel buses={buses} />
               </motion.div>
             )}
           </AnimatePresence>

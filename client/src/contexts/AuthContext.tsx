@@ -102,8 +102,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       await createUserDocument(result.user);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google:", error);
+      if (error.code === "auth/unauthorized-domain") {
+        throw new Error("Authentication domain not authorized. Please contact the administrator to add this domain to Firebase authorized domains.");
+      } else if (error.code === "auth/popup-blocked") {
+        throw new Error("Popup was blocked by your browser. Please allow popups for this site.");
+      } else if (error.code === "auth/popup-closed-by-user") {
+        throw new Error("Sign-in was cancelled. Please try again.");
+      }
       throw error;
     }
   };
@@ -111,8 +118,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signInWithEmail = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with email:", error);
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        throw new Error("Invalid email or password. Please try again.");
+      } else if (error.code === "auth/too-many-requests") {
+        throw new Error("Too many failed login attempts. Please try again later.");
+      }
       throw error;
     }
   };
@@ -121,8 +133,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       await createUserDocument(result.user, { name, role });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing up with email:", error);
+      if (error.code === "auth/email-already-in-use") {
+        throw new Error("This email is already registered. Please sign in instead.");
+      } else if (error.code === "auth/weak-password") {
+        throw new Error("Password is too weak. Please use a stronger password.");
+      } else if (error.code === "auth/invalid-email") {
+        throw new Error("Invalid email address. Please check and try again.");
+      }
       throw error;
     }
   };
