@@ -121,6 +121,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ message: "Logged out successfully" });
   });
 
+  // Document upload route (simplified version - stores metadata only)
+  app.post("/api/documents/upload", async (req, res) => {
+    try {
+      // In a production app, you would:
+      // 1. Use multer or similar middleware to handle file uploads
+      // 2. Upload files to cloud storage (S3, Firebase Storage, Replit Object Storage, etc.)
+      // 3. Store the file URL in the database
+      
+      // For this demo, we'll simulate a successful upload
+      const { docType, driverId, vehicleNumber } = req.body;
+      
+      if (!docType || !driverId || !vehicleNumber) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Simulate file storage and return mock URL
+      const mockFileUrl = `/uploads/documents/${vehicleNumber}/${docType}_${Date.now()}.pdf`;
+      
+      res.status(200).json({
+        success: true,
+        message: `${docType.toUpperCase()} uploaded successfully`,
+        fileUrl: mockFileUrl,
+        docType,
+      });
+    } catch (error) {
+      console.error("Document upload error:", error);
+      res.status(500).json({ error: "Failed to upload document" });
+    }
+  });
+
   app.get("/api/users/:id", async (req, res) => {
     try {
       const user = await storage.getUser(req.params.id);

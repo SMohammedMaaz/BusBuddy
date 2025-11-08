@@ -9,6 +9,8 @@ import { Chatbot } from "@/components/Chatbot";
 import { BusMap } from "@/components/BusMap";
 import { DriverInterface } from "@/components/DriverInterface";
 import { AdminPanel } from "@/components/AdminPanel";
+import { DocumentUpload } from "@/components/DocumentUpload";
+import { BusNotifications } from "@/components/BusNotifications";
 import { 
   Bus, MapPin, LogOut, Search, Navigation, Shield, 
   Users, TrendingUp, FileCheck, Clock, AlertCircle,
@@ -215,35 +217,40 @@ export default function Dashboard() {
                 </div>
               </Card>
 
-              {/* Available Buses */}
-              <Card className="glass-card border-primary/10 p-6">
-                <h3 className="text-xl font-bold mb-4 text-foreground">Available Buses</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {buses.slice(0, 6).map((bus) => (
-                    <Card key={bus.id} className="glass border-primary/10 p-4 hover:glass-strong transition-all">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary electric-glow flex items-center justify-center">
-                            <Bus className="w-6 h-6 text-white" />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Available Buses */}
+                <Card className="glass-card-light border-primary/10 p-6">
+                  <h3 className="text-xl font-bold mb-4 text-foreground">Available Buses</h3>
+                  <div className="space-y-3">
+                    {buses.slice(0, 6).map((bus) => (
+                      <Card key={bus.id} className="glass-card-light border-primary/10 p-4 hover-elevate">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary electric-glow flex items-center justify-center">
+                              <Bus className="w-6 h-6 text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
+                              <p className="text-sm text-muted-foreground">{bus.routeName}</p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="font-bold text-foreground">{bus.busNumber}</h4>
-                            <p className="text-sm text-muted-foreground">{bus.routeName}</p>
+                          <div className="text-right">
+                            <Badge className="bg-secondary/20 text-secondary">
+                              {bus.currentSpeed} km/h
+                            </Badge>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {bus.status === "active" ? "On Route" : "Stopped"}
+                            </p>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <Badge className="bg-secondary/20 text-secondary">
-                            {bus.currentSpeed} km/h
-                          </Badge>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {bus.status === "active" ? "On Route" : "Stopped"}
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </Card>
+                      </Card>
+                    ))}
+                  </div>
+                </Card>
+
+                {/* Bus Notifications */}
+                <BusNotifications />
+              </div>
             </div>
           )}
 
@@ -267,35 +274,11 @@ export default function Dashboard() {
                 nextStops={["Bannimantap Junction", "Kuvempunagar Circle", "City Bus Stand"]}
               />
 
-              {/* Document Upload */}
-              <Card className="glass-card border-primary/10 p-6">
-                <h3 className="text-xl font-bold mb-4 text-foreground flex items-center gap-2">
-                  <FileCheck className="w-6 h-6 text-primary" />
-                  Document Management
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[
-                    { name: "PUC Certificate", valid: "2026-03-15", status: "valid" },
-                    { name: "Fitness Certificate", valid: "2025-11-20", status: "expiring" },
-                    { name: "Driving License", valid: "2027-05-10", status: "valid" },
-                    { name: "RC Certificate", valid: "2026-08-30", status: "valid" }
-                  ].map((doc, index) => (
-                    <Card key={index} className="glass border-primary/10 p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-bold text-sm text-foreground">{doc.name}</h4>
-                        <Badge className={doc.status === "valid" ? "bg-secondary/20 text-secondary" : "bg-accent/20 text-accent"}>
-                          {doc.status === "valid" ? "✓ Valid" : "⚠ Expiring Soon"}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground mb-3">Valid until: {doc.valid}</p>
-                      <Button size="sm" variant="outline" className="w-full border-primary/20" data-testid={`button-upload-${doc.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        <Upload className="w-4 h-4 mr-2" />
-                        Upload New
-                      </Button>
-                    </Card>
-                  ))}
-                </div>
-              </Card>
+              {/* Document Upload with actual file handling */}
+              <DocumentUpload 
+                driverId="demo-driver-001"
+                vehicleNumber="KA-09-1234"
+              />
 
               {/* Eco Insights */}
               <Card className="glass-card border-secondary/10 p-6">

@@ -12,6 +12,30 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**November 8, 2025 - Document Upload & Bus Notifications Features**
+- **Document Upload System**: Working file upload functionality for driver documents
+  - Created DocumentUpload component with file input handling
+  - Supports 4 document types: PUC Certificate, Fitness Certificate, Driving License, RC Certificate
+  - File validation: Checks file type (PDF, JPG, PNG) and size (max 5MB)
+  - Status badges with color coding (Valid, Expiring Soon, Expired)
+  - Upload progress indicators and success/error toasts
+  - Integrated into driver dashboard
+  - API route: POST `/api/documents/upload` (simulated for demo)
+- **Bus Notifications Panel**: Real-time nearby bus notifications
+  - Created BusNotifications component matching user's screenshot design
+  - Shows top 3 active buses with route information
+  - Displays bus number, route name, current speed
+  - "Notify" action buttons for each bus
+  - Active bus count badge
+  - Empty state when no buses nearby
+  - Integrated into passenger dashboard alongside available buses
+  - Auto-refreshes every 3 seconds with live bus data
+- **UI Improvements**:
+  - Side-by-side grid layout for Available Buses and Bus Notifications
+  - Consistent light glassmorphism design across all components
+  - Hover elevation effects on all cards
+  - Test IDs added for all interactive elements
+
 **November 8, 2025 - Firebase Removed & Backend Authentication Implemented**
 - **Authentication System Rewrite**: Completely removed Firebase, implemented backend email/password authentication
   - Removed `firebaseUid` field from users table schema
