@@ -3,7 +3,6 @@ import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { AuthModal } from "@/components/AuthModal";
 import { useAuth } from "@/contexts/AuthContext";
 import BgBuses from "@/components/BgBuses";
 import { FeatureCards } from "@/components/FeatureCards";
@@ -30,7 +29,6 @@ const scaleIn = {
 };
 
 export default function Landing() {
-  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [, setLocation] = useLocation();
   const { currentUser } = useAuth();
 
@@ -73,20 +71,12 @@ export default function Landing() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Button
-                variant="ghost"
-                onClick={() => setAuthModalOpen(true)}
-                className="hover-elevate"
-                data-testid="button-signin-header"
-              >
-                Sign In
-              </Button>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  onClick={() => setAuthModalOpen(true)}
+                  onClick={() => setLocation("/dashboard")}
                   className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg"
                   data-testid="button-get-started-header"
                 >
@@ -137,7 +127,7 @@ export default function Landing() {
             >
               <Button
                 size="lg"
-                onClick={() => setAuthModalOpen(true)}
+                onClick={() => setLocation("/dashboard")}
                 className="bg-white text-green-700 hover:bg-white/90 text-lg px-12 py-8 h-auto rounded-2xl shadow-2xl font-bold animate-float"
                 data-testid="button-get-started-hero"
               >
@@ -245,7 +235,7 @@ export default function Landing() {
             >
               <Button
                 size="lg"
-                onClick={() => setAuthModalOpen(true)}
+                onClick={() => setLocation("/dashboard")}
                 className="bg-white text-green-700 hover:bg-white/90 text-xl px-12 py-8 h-auto rounded-2xl shadow-2xl font-bold"
                 data-testid="button-get-started-footer"
               >
@@ -256,8 +246,6 @@ export default function Landing() {
           </div>
         </section>
       </div>
-
-      <AuthModal open={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
   );
 }
