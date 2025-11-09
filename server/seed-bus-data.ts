@@ -1,239 +1,293 @@
 import { db } from './db';
 import { routes, schedules, buses } from '@shared/schema';
 
-// Sample bus data based on Mysuru and Bengaluru routes
-const mysuruRoutes = [
+// Real Mysuru bus data
+const mysuruBusData = [
   {
-    name: 'City Bus Stand to Bannuru',
-    from: 'City Bus Stand',
-    to: 'Bannuru',
-    serviceClass: 'ORD',
-    via: 'Mellahalli',
-    times: ['06:35', '06:40', '08:00', '08:30', '08:45', '09:00', '09:15', '10:00', '10:15', '10:30']
+    busNo: "MYS101",
+    routeName: "City Bus Stand → Chamundi Hill",
+    from: "City Bus Stand",
+    to: "Chamundi Hill",
+    via: ["Race Course", "Nanjumalige", "Hill Base"],
+    departureTime: "07:00",
+    gps: { lat: 12.2987, lng: 76.6575 },
+    currentStatus: "active"
   },
   {
-    name: 'City Bus Stand to BEML Nagara',
-    from: 'City Bus Stand',
-    to: 'BEML Nagara',
-    serviceClass: 'CITY',
-    via: 'Ashoka Circle',
-    times: ['06:35', '07:15', '07:50', '08:20', '08:45', '09:10', '09:15', '09:25', '09:30', '09:40']
+    busNo: "MYS102",
+    routeName: "City Bus Stand → Bannur",
+    from: "City Bus Stand",
+    to: "Bannur",
+    via: ["Mullahalli", "Kadakola"],
+    departureTime: "07:45",
+    gps: { lat: 12.2679, lng: 76.7463 },
+    currentStatus: "active"
   },
   {
-    name: 'City Bus Stand to Belawadi',
-    from: 'City Bus Stand',
-    to: 'Belawadi',
-    serviceClass: 'CITY',
-    via: 'Ambedkar Circle',
-    times: ['06:30', '07:50', '09:20', '10:55', '14:30', '15:50', '17:35', '18:55', '20:20', '22:00']
+    busNo: "MYS103",
+    routeName: "City Bus Stand → Bogadi 2nd Stage",
+    from: "City Bus Stand",
+    to: "Bogadi 2nd Stage",
+    via: ["Akashvani", "Kuvempunagar", "Hebbal"],
+    departureTime: "08:30",
+    gps: { lat: 12.3091, lng: 76.6205 },
+    currentStatus: "active"
   },
   {
-    name: 'City Bus Stand to Ambedkar Colony',
-    from: 'City Bus Stand',
-    to: 'Ambedkar Colony',
-    serviceClass: 'CITY',
-    via: 'Triveni Circle',
-    times: ['06:35', '08:00', '09:05', '10:40', '12:00', '13:25', '15:10', '16:35', '17:40', '19:15']
+    busNo: "MYS104",
+    routeName: "City Bus Stand → Srirampura",
+    from: "City Bus Stand",
+    to: "Srirampura",
+    via: ["Vivekananda Circle", "Jayalakshmipuram"],
+    departureTime: "09:15",
+    gps: { lat: 12.3274, lng: 76.6398 },
+    currentStatus: "active"
   },
   {
-    name: 'City Bus Stand to KRS',
-    from: 'City Bus Stand',
-    to: 'KRS Dam',
-    serviceClass: 'ORD',
-    via: 'Barath Cancer Hospital',
-    times: ['07:10', '09:30', '12:00', '14:30', '16:50', '18:15']
-  },
+    busNo: "MYS105",
+    routeName: "City Bus Stand → KRS",
+    from: "City Bus Stand",
+    to: "Krishna Raja Sagar (KRS)",
+    via: ["Metagalli", "Koorgalli", "Brindavan Gardens"],
+    departureTime: "10:00",
+    gps: { lat: 12.4246, lng: 76.5681 },
+    currentStatus: "inactive"
+  }
 ];
 
-const bengaluruRoutes = [
+// Real Bengaluru bus data
+const bengaluruBusData = [
   {
-    routeNumber: '13',
-    name: 'Shivajinagara to Banashankari',
-    from: 'Shivajinagara Bus Station',
-    to: 'Banashankari TTMC',
-    times: ['06:00', '07:30', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00']
+    busNo: "BLR13",
+    routeName: "Shivajinagar → Banashankari TTMC",
+    from: "Shivajinagar Bus Station",
+    to: "Banashankari TTMC",
+    via: ["Richmond Circle", "Lalbagh", "Jayanagar 4th Block"],
+    departureTime: "06:45",
+    gps: { lat: 12.9374, lng: 77.5868 },
+    currentStatus: "active"
   },
   {
-    routeNumber: '25A',
-    name: 'Kempegowda to BTM Layout',
-    from: 'Kempegowda Bus Station',
-    to: 'BTM Layout',
-    times: ['06:15', '07:45', '09:15', '11:15', '13:15', '15:15', '17:15', '19:15']
+    busNo: "BLR61",
+    routeName: "Majestic → Vijayanagar TTMC",
+    from: "Kempegowda Bus Station (Majestic)",
+    to: "Vijayanagar TTMC",
+    via: ["Corporation Circle", "Hosahalli", "Maruthi Mandir"],
+    departureTime: "07:20",
+    gps: { lat: 12.9716, lng: 77.5545 },
+    currentStatus: "active"
   },
   {
-    routeNumber: '96',
-    name: 'Kempegowda Circular',
-    from: 'Kempegowda Bus Station',
-    to: 'Kempegowda Bus Station',
-    times: ['06:30', '08:00', '09:30', '11:30', '13:30', '15:30', '17:30', '19:30']
+    busNo: "BLR171",
+    routeName: "Majestic → Koramangala 1st Block",
+    from: "Majestic",
+    to: "Koramangala 1st Block",
+    via: ["Richmond Circle", "Adugodi", "Forum Mall"],
+    departureTime: "08:10",
+    gps: { lat: 12.9361, lng: 77.6129 },
+    currentStatus: "active"
   },
   {
-    routeNumber: '500A',
-    name: 'Banashankari to Hebbal',
-    from: 'Banashankari TTMC',
-    to: 'Hebbal',
-    times: ['06:00', '07:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00']
+    busNo: "BLR333E",
+    routeName: "Majestic → Kadugodi (Whitefield)",
+    from: "Majestic",
+    to: "Kadugodi",
+    via: ["Indiranagar", "KR Puram", "Whitefield"],
+    departureTime: "09:00",
+    gps: { lat: 12.9859, lng: 77.7326 },
+    currentStatus: "active"
   },
   {
-    routeNumber: 'KIA9',
-    name: 'Kempegowda to Airport',
-    from: 'Kempegowda Bus Station',
-    to: 'Kempegowda International Airport',
-    times: ['05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-  },
+    busNo: "BLR365J",
+    routeName: "Majestic → Jigani APC Circle",
+    from: "Majestic",
+    to: "Jigani APC Circle",
+    via: ["BTM", "Electronic City", "Bommasandra"],
+    departureTime: "09:40",
+    gps: { lat: 12.8221, lng: 77.6764 },
+    currentStatus: "active"
+  }
 ];
 
-function generateStops(from: string, to: string, via: string, city: 'Mysuru' | 'Bengaluru'): Array<{name: string, lat: number, lng: number}> {
-  const stops = [];
+// Helper to generate stop coordinates along a route
+function generateStops(from: string, to: string, via: string[], startLat: number, startLng: number, endLat: number, endLng: number) {
+  const stops = [{ name: from, lat: startLat, lng: startLng }];
   
-  // Base coordinates
-  const coords = city === 'Mysuru' 
-    ? { lat: 12.2958, lng: 76.6394 }
-    : { lat: 12.9716, lng: 77.5946 };
-  
-  // Starting stop
-  stops.push({
-    name: from,
-    lat: coords.lat,
-    lng: coords.lng
-  });
-  
-  // Via stops
-  if (via) {
-    const viaStops = via.split(',').map(s => s.trim());
-    viaStops.forEach((stop, idx) => {
-      const ratio = (idx + 1) / (viaStops.length + 1);
-      stops.push({
-        name: stop,
-        lat: coords.lat + (Math.random() - 0.5) * 0.05,
-        lng: coords.lng + (Math.random() - 0.5) * 0.05
-      });
-    });
+  // Generate intermediate stops
+  const totalStops = via.length + 2; // from + via + to
+  for (let i = 0; i < via.length; i++) {
+    const ratio = (i + 1) / (totalStops - 1);
+    const lat = startLat + (endLat - startLat) * ratio;
+    const lng = startLng + (endLng - startLng) * ratio;
+    stops.push({ name: via[i], lat, lng });
   }
   
-  // Ending stop
-  stops.push({
-    name: to,
-    lat: coords.lat + (Math.random() - 0.5) * 0.1,
-    lng: coords.lng + (Math.random() - 0.5) * 0.1
-  });
-  
+  stops.push({ name: to, lat: endLat, lng: endLng });
   return stops;
 }
 
-async function seedMysuruRoutes() {
-  console.log('Seeding Mysuru routes...');
+// Helper to generate multiple schedules throughout the day
+function generateSchedules(baseTime: string): string[] {
+  const times = [baseTime];
+  const [hours, minutes] = baseTime.split(':').map(Number);
   
-  for (const route of mysuruRoutes) {
-    try {
-      const [insertedRoute] = await db.insert(routes).values({
-        name: route.name,
-        from: route.from,
-        to: route.to,
-        serviceClass: route.serviceClass,
-        city: 'Mysuru',
-        stops: generateStops(route.from, route.to, route.via, 'Mysuru'),
-        isEcoRoute: route.serviceClass === 'SUB' ? 'true' : 'false',
-        estimatedCO2Savings: Math.random() * 50 + 10,
-      }).returning();
-      
-      // Add schedules
-      for (const time of route.times) {
-        await db.insert(schedules).values({
-          routeId: insertedRoute.id,
-          departureTime: time,
-          isActive: 'true',
-        });
-      }
-      
-      console.log(`✓ ${route.name} (${route.times.length} schedules)`);
-    } catch (error) {
-      console.error(`Error seeding ${route.name}:`, error);
-    }
+  // Generate 6-8 schedules throughout the day
+  for (let i = 1; i < 7; i++) {
+    const newHour = (hours + i * 2) % 24;
+    const newTime = `${newHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    times.push(newTime);
   }
+  
+  return times;
 }
 
-async function seedBengaluruRoutes() {
-  console.log('\nSeeding Bengaluru routes...');
-  
-  for (const route of bengaluruRoutes) {
-    try {
-      const [insertedRoute] = await db.insert(routes).values({
-        routeNumber: route.routeNumber,
-        name: route.name,
-        from: route.from,
-        to: route.to,
-        serviceClass: 'ORD',
-        city: 'Bengaluru',
-        stops: generateStops(route.from, route.to, '', 'Bengaluru'),
-        isEcoRoute: 'false',
-        estimatedCO2Savings: Math.random() * 30 + 5,
-      }).returning();
-      
-      // Add schedules
-      for (const time of route.times) {
-        await db.insert(schedules).values({
-          routeId: insertedRoute.id,
-          departureTime: time,
-          isActive: 'true',
-        });
-      }
-      
-      console.log(`✓ Route ${route.routeNumber}: ${route.name} (${route.times.length} schedules)`);
-    } catch (error) {
-      console.error(`Error seeding route ${route.routeNumber}:`, error);
-    }
-  }
-}
+export async function seedBusData() {
+  console.log('🌱 Starting database seeding with real Karnataka bus data...');
 
-async function seedBuses() {
-  console.log('\nSeeding active buses...');
-  
-  // Get all routes
-  const allRoutes = await db.select().from(routes);
-  
-  // Create 10 buses on random routes
-  const busNumbers = ['KA-09-A-1234', 'KA-09-B-5678', 'KA-09-C-9012', 'KA-09-D-3456', 'KA-09-E-7890',
-                      'KA-05-F-1111', 'KA-05-G-2222', 'KA-05-H-3333', 'KA-05-I-4444', 'KA-05-J-5555'];
-  
-  for (let i = 0; i < 10; i++) {
-    const randomRoute = allRoutes[Math.floor(Math.random() * allRoutes.length)];
-    const coords = randomRoute.city === 'Mysuru' 
-      ? { lat: 12.2958, lng: 76.6394 }
-      : { lat: 12.9716, lng: 77.5946 };
-    
-    try {
-      await db.insert(buses).values({
-        busNumber: busNumbers[i],
-        routeName: randomRoute.name,
-        latitude: coords.lat + (Math.random() - 0.5) * 0.05,
-        longitude: coords.lng + (Math.random() - 0.5) * 0.05,
-        status: 'active',
-        currentSpeed: Math.random() * 30 + 15,
-        occupancy: Math.floor(Math.random() * 60) + 10,
-      });
-      
-      console.log(`✓ Bus ${busNumbers[i]} on ${randomRoute.name}`);
-    } catch (error) {
-      console.error(`Error seeding bus ${busNumbers[i]}:`, error);
-    }
-  }
-}
-
-async function main() {
   try {
-    console.log('🚌 Starting BusBuddy data seeding...\n');
+    // Clear existing data
+    console.log('🗑️  Clearing existing data...');
+    await db.delete(schedules);
+    await db.delete(buses);
+    await db.delete(routes);
+
+    const insertedRoutes: any[] = [];
     
-    await seedMysuruRoutes();
-    await seedBengaluruRoutes();
-    await seedBuses();
+    // Seed Mysuru routes and buses
+    console.log('🚌 Seeding Mysuru routes and buses...');
+    for (const busData of mysuruBusData) {
+      // Estimate end coordinates (slight variation from start)
+      const endLat = busData.gps.lat + (Math.random() * 0.1 - 0.05);
+      const endLng = busData.gps.lng + (Math.random() * 0.1 - 0.05);
+      
+      const stops = generateStops(
+        busData.from,
+        busData.to,
+        busData.via,
+        busData.gps.lat,
+        busData.gps.lng,
+        endLat,
+        endLng
+      );
+
+      // Insert route
+      const [route] = await db.insert(routes).values({
+        routeNumber: busData.busNo,
+        name: busData.routeName,
+        from: busData.from,
+        to: busData.to,
+        serviceClass: 'ORD',
+        city: 'Mysuru',
+        stops: stops,
+        isEcoRoute: Math.random() > 0.5 ? 'true' : 'false',
+        estimatedCO2Savings: Math.random() * 50 + 20,
+      }).returning();
+
+      insertedRoutes.push(route);
+
+      // Insert bus
+      await db.insert(buses).values({
+        busNumber: busData.busNo,
+        routeName: busData.routeName,
+        latitude: busData.gps.lat,
+        longitude: busData.gps.lng,
+        status: busData.currentStatus,
+        currentSpeed: busData.currentStatus === 'active' ? Math.floor(Math.random() * 30) + 20 : 0,
+        occupancy: busData.currentStatus === 'active' ? Math.floor(Math.random() * 40) + 10 : 0,
+      });
+
+      // Insert schedules
+      const scheduleTimes = generateSchedules(busData.departureTime);
+      for (const time of scheduleTimes) {
+        await db.insert(schedules).values({
+          routeId: route.id,
+          departureTime: time,
+          isActive: 'true',
+        });
+      }
+    }
+
+    // Seed Bengaluru routes and buses
+    console.log('🚌 Seeding Bengaluru routes and buses...');
+    for (const busData of bengaluruBusData) {
+      // Estimate end coordinates (slight variation from start)
+      const endLat = busData.gps.lat + (Math.random() * 0.1 - 0.05);
+      const endLng = busData.gps.lng + (Math.random() * 0.1 - 0.05);
+      
+      const stops = generateStops(
+        busData.from,
+        busData.to,
+        busData.via,
+        busData.gps.lat,
+        busData.gps.lng,
+        endLat,
+        endLng
+      );
+
+      // Insert route
+      const [route] = await db.insert(routes).values({
+        routeNumber: busData.busNo,
+        name: busData.routeName,
+        from: busData.from,
+        to: busData.to,
+        serviceClass: 'CITY',
+        city: 'Bengaluru',
+        stops: stops,
+        isEcoRoute: Math.random() > 0.5 ? 'true' : 'false',
+        estimatedCO2Savings: Math.random() * 80 + 30,
+      }).returning();
+
+      insertedRoutes.push(route);
+
+      // Insert bus
+      await db.insert(buses).values({
+        busNumber: busData.busNo,
+        routeName: busData.routeName,
+        latitude: busData.gps.lat,
+        longitude: busData.gps.lng,
+        status: busData.currentStatus,
+        currentSpeed: busData.currentStatus === 'active' ? Math.floor(Math.random() * 40) + 25 : 0,
+        occupancy: busData.currentStatus === 'active' ? Math.floor(Math.random() * 50) + 15 : 0,
+      });
+
+      // Insert schedules
+      const scheduleTimes = generateSchedules(busData.departureTime);
+      for (const time of scheduleTimes) {
+        await db.insert(schedules).values({
+          routeId: route.id,
+          departureTime: time,
+          isActive: 'true',
+        });
+      }
+    }
+
+    // Summary
+    const totalBuses = await db.select().from(buses);
+    const totalRoutes = await db.select().from(routes);
+    const totalSchedules = await db.select().from(schedules);
+
+    console.log('\n✅ Database seeding completed successfully!');
+    console.log(`📊 Summary:`);
+    console.log(`   - Routes: ${totalRoutes.length} (${mysuruBusData.length} Mysuru + ${bengaluruBusData.length} Bengaluru)`);
+    console.log(`   - Buses: ${totalBuses.length}`);
+    console.log(`   - Schedules: ${totalSchedules.length}`);
+    console.log(`   - Cities: Mysuru, Bengaluru`);
     
-    console.log('\n✅ All bus data seeded successfully!');
-    process.exit(0);
   } catch (error) {
-    console.error('❌ Error seeding data:', error);
-    process.exit(1);
+    console.error('❌ Error seeding database:', error);
+    throw error;
   }
 }
 
-main();
+// Run seeding if this file is executed directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  seedBusData()
+    .then(() => {
+      console.log('✨ Seeding complete!');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('Failed to seed database:', error);
+      process.exit(1);
+    });
+}
