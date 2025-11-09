@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Marker, InfoWindow } from '@react-google-maps/api';
+import { Marker, InfoWindow, Polyline, Circle } from '@react-google-maps/api';
 import { Bus as BusType } from '@shared/schema';
 import { Bus, MapPin, Users, Activity } from 'lucide-react';
 
@@ -12,8 +12,70 @@ interface AnimatedBusMarkerProps {
 
 export function AnimatedBusMarker({ bus, isSelected, onClick, onClose }: AnimatedBusMarkerProps) {
   const [position, setPosition] = useState({ lat: bus.latitude, lng: bus.longitude });
+  const [heading, setHeading] = useState(0);
+  const [trail, setTrail] = useState<google.maps.LatLngLiteral[]>([]);
+  const [pulseRadius, setPulseRadius] = useState(50);
+  const [pulseOpacity, setPulseOpacity] = useState(0.2);
   const previousPositionRef = useRef({ lat: bus.latitude, lng: bus.longitude });
   const animationFrameRef = useRef<number>();
+  const pulseAnimationRef = useRef<number>();
+  const growingRef = useRef(true);
+  const currentRadiusRef = useRef(50);
+
+  // Calculate heading/direction of movement
+  const calculateHeading = (from: google.maps.LatLngLiteral, to: google.maps.LatLngLiteral) => {
+    const dLng = to.lng - from.lng;
+    const dLat = to.lat - from.lat;
+    const angle = Math.atan2(dLng, dLat) * (180 / Math.PI);
+    return angle;
+  };
+
+  // Pulsing animation for active buses
+  useEffect(() => {
+    if (bus.status !== 'active') {
+      return;
+    }
+
+    const pulseSpeed = 0.5;
+    const minRadius = 40;
+    const maxRadius = 80;
+    const minOpacity = 0.1;
+    const maxOpacity = 0.4;
+    
+    const animatePulse = () => {
+      // Update radius using ref to maintain state
+      if (growingRef.current) {
+        currentRadiusRef.current += pulseSpeed;
+        if (currentRadiusRef.current >= maxRadius) {
+          currentRadiusRef.current = maxRadius;
+          growingRef.current = false;
+        }
+      } else {
+        currentRadiusRef.current -= pulseSpeed;
+        if (currentRadiusRef.current <= minRadius) {
+          currentRadiusRef.current = minRadius;
+          growingRef.current = true;
+        }
+      }
+      
+      const newRadius = currentRadiusRef.current;
+      const radiusProgress = (newRadius - minRadius) / (maxRadius - minRadius);
+      const newOpacity = maxOpacity - (radiusProgress * (maxOpacity - minOpacity));
+      
+      setPulseRadius(newRadius);
+      setPulseOpacity(newOpacity);
+      
+      pulseAnimationRef.current = requestAnimationFrame(animatePulse);
+    };
+    
+    pulseAnimationRef.current = requestAnimationFrame(animatePulse);
+    
+    return () => {
+      if (pulseAnimationRef.current) {
+        cancelAnimationFrame(pulseAnimationRef.current);
+      }
+    };
+  }, [bus.status]);
 
   // Smooth animation between positions
   useEffect(() => {
@@ -25,15 +87,27 @@ export function AnimatedBusMarker({ bus, isSelected, onClick, onClose }: Animate
       return;
     }
     
-    const duration = 2000; // 2 seconds
+    // Calculate heading for rotation
+    const newHeading = calculateHeading(startPos, endPos);
+    setHeading(newHeading);
+    
+    // Update trail (keep last 10 positions)
+    setTrail(prev => {
+      const newTrail = [...prev, startPos];
+      return newTrail.slice(-10);
+    });
+    
+    const duration = 2500; // 2.5 seconds for smoother animation
     const startTime = Date.now();
     
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing function for smooth movement
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      // Smoother easing function (ease-in-out cubic)
+      const easeProgress = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
       
       const lat = startPos.lat + (endPos.lat - startPos.lat) * easeProgress;
       const lng = startPos.lng + (endPos.lng - startPos.lng) * easeProgress;
@@ -56,15 +130,16 @@ export function AnimatedBusMarker({ bus, isSelected, onClick, onClose }: Animate
     };
   }, [bus.latitude, bus.longitude]);
 
-  // Create custom bus icon
+  // Enhanced bus icon with direction indicator (arrow/bus shape)
   const busIcon = {
-    path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+    path: 'M12 2 L16 6 L14 6 L14 14 L16 16 L12 20 L8 16 L10 14 L10 6 L8 6 Z',
     fillColor: bus.status === 'active' ? '#1DB954' : '#94A3B8',
     fillOpacity: 1,
     strokeColor: '#FFFFFF',
     strokeWeight: 2,
-    scale: 1.5,
-    anchor: new google.maps.Point(12, 24),
+    scale: 1.2,
+    anchor: new google.maps.Point(12, 12),
+    rotation: heading,
   };
 
   const getStatusColor = () => {
@@ -81,6 +156,35 @@ export function AnimatedBusMarker({ bus, isSelected, onClick, onClose }: Animate
 
   return (
     <>
+      {/* Movement trail - shows bus path */}
+      {trail.length > 1 && (
+        <Polyline
+          path={[...trail, position]}
+          options={{
+            strokeColor: bus.status === 'active' ? '#1DB954' : '#94A3B8',
+            strokeOpacity: 0.6,
+            strokeWeight: 3,
+            geodesic: true,
+          }}
+        />
+      )}
+      
+      {/* Pulsing circle for active buses */}
+      {bus.status === 'active' && (
+        <Circle
+          center={position}
+          radius={pulseRadius}
+          options={{
+            strokeColor: '#1DB954',
+            strokeOpacity: pulseOpacity + 0.3,
+            strokeWeight: 2,
+            fillColor: '#1DB954',
+            fillOpacity: pulseOpacity,
+          }}
+        />
+      )}
+      
+      {/* Animated bus marker with direction */}
       <Marker
         position={position}
         onClick={onClick}
