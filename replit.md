@@ -13,6 +13,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**November 9, 2025 - Enhanced Map Animations**
+- **Advanced Bus Animations on Map**: Implemented comprehensive visual animations
+  - **Direction Indicators**: Bus markers rotate to face their direction of travel using calculated heading angles
+  - **Movement Trails**: Visual path showing last 10 positions of each bus with color-coded polylines (green for active, gray for stopped)
+  - **Pulsing Effects**: Active buses display animated pulsing circles that expand (40m-80m radius) with inverse opacity fade
+  - **Smooth Transitions**: Enhanced ease-in-out cubic easing for natural acceleration/deceleration over 2.5 seconds
+  - **Performance Optimized**: Ref-based animation state management prevents unwanted re-renders, maintains 60fps with requestAnimationFrame
+  - **Custom Icons**: Arrow-shaped bus markers clearly indicate direction of movement
+  - Technical: Two independent animation loops (position + pulse) with proper cleanup on unmount
+
 **November 8, 2025 - Pin Bus & Proximity Notifications**
 - **Pin Bus Feature**: Track specific buses with location-based notifications
   - Click on any bus from the list to select it
